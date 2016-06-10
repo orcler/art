@@ -15,10 +15,8 @@
 
 	<bean id="userDao" class="com.art.dao.impl.UserDaoImpl" scope="prototype" />
 	<bean id="trafficDao" class="com.art.dao.impl.TraficDaoImpl" scope="prototype" />
-	<bean id="serialNoDao" class="com.art.dao.impl.SerialNoDaoImpl" scope="prototype" />
 	<bean id="userService" class="com.art.service.UserService"  autowire="byType"  />
 	<bean id="trafficService" class="com.art.service.TrafficService"  autowire="byType"  />
-	<bean id="serialNoService" class="com.art.service.SerialNoService"  autowire="byType"  />
 	<bean id="CtrlLogin" class="com.art.ctrl.CtrlLogin"  autowire="byType"  />
 	<bean id="CtrlInManager" class="com.art.ctrl.CtrlInManager"  autowire="byType"  />
 	<bean id="handerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >

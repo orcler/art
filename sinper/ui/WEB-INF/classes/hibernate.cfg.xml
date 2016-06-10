@@ -12,6 +12,5 @@
    <!-- List of XML mapping files -->
    <mapping resource="com/art/schema/UserSchema.hbm.xml" />
    <mapping resource="com/art/schema/TrafficSchema.hbm.xml" />
-   <mapping resource="com/art/schema/SerialNoSchema.hbm.xml" />
 </session-factory>
 </hibernate-configuration>
