@@ -1,0 +1,12 @@
+{"total":28,"rows":[
+	{"productid":"法拉利S01","productname":"100.00","unitcost":"白色","status":"山东济南","listprice":36.50,"attr1":"张三","itemid":"EST-10000010"},
+	{"productid":"奥迪A6","productname":"59.85","unitcost":"银灰","status":"山东济南","listprice":18.50,"attr1":"李四","itemid":"CST-10000012"},
+	{"productid":"奔驰R-SN-01","productname":"10.25","unitcost":"黑色","status":"山东淄博","listprice":38.50,"attr1":"王五","itemid":"EST-10000012"},
+	{"productid":"RP-SN-01","productname":"5.89","unitcost":"白色","status":"山东青岛","listprice":26.50,"attr1":"测试一","itemid":"EST-10000013"},
+	{"productid":"RP-LI-02","productname":"10.00","unitcost":"宝蓝","status":"山东烟台","listprice":35.50,"attr1":"测试二","itemid":"EST-10000014"},
+	{"productid":"FL-DSH-01","productname":"45.00","unitcost":"红色","status":"山东枣庄","listprice":158.50,"attr1":"赵钱","itemid":"EST-10000015"},
+	{"productid":"FL-DSH-01","productname":"26.00","unitcost":"绿色","status":"山东临沂","listprice":83.50,"attr1":"孙李","itemid":"EST-10000017"},
+	{"productid":"FL-DLH-02","productname":"24.20","unitcost":"青色","status":"山东青岛","listprice":23.50,"attr1":"周五","itemid":"EST-10000019"},
+	{"productid":"FL-DLH-02","productname":"15.49","unitcost":"黄色","status":"山东青岛","listprice":89.50,"attr1":"秦川","itemid":"EST-10000019"},
+	{"productid":"AV-CB-01","productname":"21.38","unitcost":"黄白","status":"山东淄博","listprice":63.50,"attr1":"李明","itemid":"EST-10000020"}
+]}

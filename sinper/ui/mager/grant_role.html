@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>菜单组配置</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+</head>
+<body>
+	<h2>菜单组配置</h2>
+	<p>请将<font color="green">系统菜单</font>拖入<font color="green">保存菜单组</font></p>
+	<div style="margin:20px;">
+		菜单组名称：<select class="easyui-combobox" name="state" style="width:200px;">
+				<option value="AL">振邦录入人员</option>
+				<option value="AK">振邦审核人员</option>
+				<option value="AK">经销商录入人员</option>
+				<option value="AK">经销商录入人员</option>
+				
+		</select>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="addPanel()">保存菜单组</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="removePanel()">删除菜单组</a>
+	</div>
+	<div style="margin:20px;">
+	<div id="source" style="border:1px solid #ccc;width:300px;height:400px;float:left;margin:5px;">
+		系统菜单
+		<div id="d1" class="drag">入库登记</div>
+		<div id="d2" class="drag">入库审核</div>
+		<div id="d3" class="drag">打印凭证和入库确认</div>
+		<div id="d4" class="drag">出库登记</div>
+		<div id="d5" class="drag">出库审核</div>
+		<div id="d6" class="drag">打印凭证和出入库确认</div>
+		<div id="d7" class="drag">入库查询</div>
+		<div id="d8" class="drag">出库查询</div>
+		<div id="d9" class="drag">库存查询</div>
+	</div>
+		<div id="target" style="border:1px solid #ccc;width:300px;height:400px;float:left;margin:5px;">
+		保存菜单组
+	</div>
+	<div style="clear:both"></div>
+	<style type="text/css">
+		.drag{
+			width:120px;
+			height:5px;
+			padding:10px;
+			margin:5px;
+			border:1px solid #ccc;
+			background:#AACCFF;
+		}
+		.dp{
+			opacity:0.5;
+			filter:alpha(opacity=50);
+		}
+		.over{
+			background:#FBEC88;
+		}
+	</style>
+	<script>
+	$(function(){
+			$('.drag').draggable({
+				proxy:'clone',
+				revert:true,
+				cursor:'auto',
+				onStartDrag:function(){
+					$(this).draggable('options').cursor='not-allowed';
+					$(this).draggable('proxy').addClass('dp');
+				},
+				onStopDrag:function(){
+					$(this).draggable('options').cursor='auto';
+				}
+			});
+			$('#target').droppable({
+				//accept:'#d1,#d3',
+				onDragEnter:function(e,source){
+					$(source).draggable('options').cursor='auto';
+					$(source).draggable('proxy').css('border','1px solid red');
+					$(this).addClass('over');
+				},
+				onDragLeave:function(e,source){
+					$(source).draggable('options').cursor='not-allowed';
+					$(source).draggable('proxy').css('border','1px solid #ccc');
+					$(this).removeClass('over');
+				},
+				onDrop:function(e,source){
+					$(this).append(source)
+					$(this).removeClass('over');
+				}
+			});
+	});
+</script>
+</body>
+</html>

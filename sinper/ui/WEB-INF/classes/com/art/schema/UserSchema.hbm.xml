@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+	<class name="com.art.schema.UserSchema" table="IUser">
+		<id name="userId" type="java.lang.String" column="userid">
+			<generator class="assigned" />
+		</id>
+		<property name="notype" 			type="java.lang.String" column="notype" />
+		<property name="name" 			type="java.lang.String" column="name" />
+		<property name="nolength" 			type="java.lang.String" column="nolength" />
+		<property name="prefix" 		type="java.lang.String" column="prefix" />
+		<property name="remark" 			type="java.lang.String" column="remark" />
+		<property name="email" 			type="java.lang.String" column="email" />
+		<property name="operate" 		type="java.lang.String" column="operator" />
+		<property name="makedate" 	type="java.sql.Date" column="makedate" />
+		<property name="maketime" 	type="java.lang.String" column="maketime" />
+		<property name="modifydate" 	type="java.sql.Date" column="modifydate" />
+		<property name="modifytime" 	type="java.lang.String" column="modifytime" />
+	</class>
+</hibernate-mapping>
