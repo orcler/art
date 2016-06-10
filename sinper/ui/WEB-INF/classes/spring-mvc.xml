@@ -25,7 +25,10 @@
 	<bean id="CtrlLogin" class="com.art.ctrl.CtrlLogin"  autowire="byType"  />
 	<bean id="CtrlInManager" class="com.art.ctrl.CtrlInManager"  autowire="byType"  />
 	<bean id="CtrlCodeQuery" class="com.art.ctrl.CtrlCodeQuery"  autowire="byType"  />
+<<<<<<< HEAD
 	<bean id="CtrlDataQuery" class="com.art.ctrl.CtrlDataQuery"  autowire="byType"  />
+=======
+>>>>>>> origin/master
 	<bean id="handerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
 		<property name="mappings"  ref="urlMappings" />
 	</bean>
@@ -33,7 +36,10 @@
 		<prop key="login.form">CtrlLogin</prop>
 		<prop key="in_resiter.form">CtrlInManager</prop>
 		<prop key="codequery.form">CtrlCodeQuery</prop>
+<<<<<<< HEAD
 		<prop key="dataquery.form">CtrlDataQuery</prop>
+=======
+>>>>>>> origin/master
 	</util:properties>
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
 		<property name="prefix"  value="/" />
