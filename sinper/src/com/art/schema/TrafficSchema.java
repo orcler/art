@@ -5,14 +5,15 @@ import java.sql.Date;
 public class TrafficSchema { 
     
     private Integer id;
+    private String serialNo;
     private String EngineNo;
     private String VIN;
     private String state;
     private String uwflag;
     private String model;
-    private String cost;
+    private Double cost;
     private String cert;
-    private String mileage;
+    private Double mileage;
     private String color;
     private String attn;
     private String phone;
@@ -33,6 +34,14 @@ public class TrafficSchema {
 
     public void setId(Integer id) {
 	this.id = id;
+    }
+    
+    public String getSerialNo() {
+	return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+	this.serialNo = serialNo;
     }
     
     public String getEngineNo() {
@@ -65,10 +74,10 @@ public class TrafficSchema {
     public void setModel(String model) {
         this.model = model;
     }
-    public String getCost() {
+    public Double getCost() {
         return cost;
     }
-    public void setCost(String cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
     public String getCert() {
@@ -77,10 +86,10 @@ public class TrafficSchema {
     public void setCert(String cert) {
         this.cert = cert;
     }
-    public String getMileage() {
+    public Double getMileage() {
         return mileage;
     }
-    public void setMileage(String mileage) {
+    public void setMileage(Double mileage) {
         this.mileage = mileage;
     }
     public String getColor() {

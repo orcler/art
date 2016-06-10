@@ -2,6 +2,7 @@ package com.art.ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -21,16 +22,18 @@ public class CtrlLogin implements Controller {
 	    return new ModelAndView("login"); 
 	}
 	boolean isExists = userService.login(tUserId, tPwd);
+	HttpSession tHttpSession = request.getSession();
+	tHttpSession.setAttribute("userId", tUserId);
 	if (isExists)
 		return new ModelAndView("index");
 	else
 	    return new ModelAndView("login");
     }
 
-    
     /**
      * 此后方法为注入准备，无意义
      */
+    
     public UserService getUserService() {
         return userService;
     }

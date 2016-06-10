@@ -12,7 +12,13 @@ import com.art.schema.TrafficSchema;
 public class TraficDaoImpl implements ITrafficDao {
 
     @Override
-    public boolean save(TrafficSchema aTrafficSchema) {
+    public List query(Session aSession, String aSql) {
+	List tList = aSession.createQuery(aSql).list();
+	return tList;
+    }
+
+    @Override
+    public boolean save(Session aSession, TrafficSchema aTrafficSchema) {
 	Session session = HibernateUtil.getSession();
 	Transaction tTransaction;
 	tTransaction = session.beginTransaction();
@@ -30,7 +36,7 @@ public class TraficDaoImpl implements ITrafficDao {
     }
 
     @Override
-    public boolean del(TrafficSchema aTrafficSchema) {
+    public boolean del(Session aSession, TrafficSchema aTrafficSchema) {
 	Session session = HibernateUtil.getSession();
 	Transaction tTransaction;
 	tTransaction = session.beginTransaction();
@@ -47,7 +53,7 @@ public class TraficDaoImpl implements ITrafficDao {
     }
 
     @Override
-    public boolean update(TrafficSchema aTrafficSchema) {
+    public boolean update(Session aSession, TrafficSchema aTrafficSchema) {
 	Session session = HibernateUtil.getSession();
 	Transaction tTransaction;
 	tTransaction = session.beginTransaction();
@@ -61,13 +67,6 @@ public class TraficDaoImpl implements ITrafficDao {
 	    session.close();
 	}
 	return true;
-    }
-
-    @Override
-    public List query(String aSql) {
-	Session session = HibernateUtil.getSession();
-	List tList = session.createQuery(aSql).list();
-	return tList;
     }
 
 }

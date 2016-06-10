@@ -15,9 +15,9 @@
 		</tr>
 		<tr>
 			<td>价值</td>
-			<td><input class="easyui-textbox" type="text"  id="cost" name="cost" ></input></td>
+			<td><input class="easyui-textbox" type="text"  id="cost" name="cost" ></input>万</td>
 			<td>行驶里程</td>
-			<td><input class="easyui-textbox" type="text"  id="mileage" name="mileage" data-options="required:false"></input></td>
+			<td><input class="easyui-textbox" type="text"  id="mileage" name="mileage" data-options="required:false">KM</input></td>
 		</tr>
 		<tr>
 			<td>颜色</td>
@@ -28,12 +28,9 @@
 		<tr>
 			<td>联系电话</td>
 			<td><input class="easyui-textbox" type="text"  id="phone"  name="phone" data-options="required:false"></input></td>
-			<td>入机经销商</td>
-			<td><input class="easyui-textbox" type="text"  id="comcode" name="comcode" data-options="required:false"></input></td>
-		</tr>
-		<tr>
-			<td>单位名称</td>
-			<td><input class="easyui-textbox" type="text"  id="group"  name="group" data-options="required:false"></input></td>
+			<td>车源</td>
+			<td><select class="easyui-combobox"  id="comcode"	name="comcode" style="width:145px;" data-options="	url:'codequery.form?codetype=comcode',method:'get',valueField:'id',textField:'text',panelHeight:'auto'">
+			</select></td>
 		</tr>
 		<tr>
 			<td>备注</td>

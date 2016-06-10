@@ -16,7 +16,7 @@ function inUw()
 	if (isExists){
 		$('#DivTab').tabs('select','入库审核');
 	} else{
-		$('#DivTab').tabs('add',{title: '入库审核', href: './in/in_uw.html', closable: true});
+		$('#DivTab').tabs('add',{title: '入库审核', href: './in/in_uw.jsp', closable: true});
 	}
 }
 
@@ -45,8 +45,8 @@ function submitForm() {
 	$(document).ready(function() {
 		var options = {
 			url : 'in_resiter.form',
-			success : function() {
-				alert('保存成功!');
+			success : function(data) {
+				$.messager.alert(data);
 			}
 		}
 		$('#fm_in_save').ajaxSubmit(options);
@@ -54,14 +54,5 @@ function submitForm() {
 	$('#fm_in_save').clearForm();
 }
 
-
-/*
- * function showRequest(formData, jqForm, options) { var queryString =
- * $.param(formData); alert('About to submit: \n\n' + queryString); return true; }
- * 
- * function showResponse(responseText, statusText, xhr, $form) { alert('status: ' +
- * statusText + '\n\nresponseText: \n' + responseText + '\n\nThe output div
- * should have already been updated with the responseText.'); }
- */
 
 

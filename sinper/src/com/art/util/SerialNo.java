@@ -11,25 +11,28 @@ import com.art.schema.SerialNoSchema;
 public class SerialNo {
 
     public synchronized String getSerialNo(String aType) {
-	String tSql = " select maxno from serialno where notype='" + aType + "' ";
+	String tSql = " from SerialNoSchema where notype='" + aType + "' ";
 	Session session = HibernateUtil.getSession();
-	Query query = session.createSQLQuery(tSql);
+	Query query = session.createQuery(tSql);
 	List<SerialNoSchema> tList = query.list();
 	if (tList == null || tList.size() == 0) {
 	    return null;
 	}
-	SerialNoSchema tSchema = tList.get(1);
+	SerialNoSchema tSchema = tList.get(0);
 	String tPrefix = tSchema.getPrefix() == null ? "" : tSchema.getPrefix().trim();
-	int tMaxNo = tSchema.getMaxno();
+	int tMaxNo = tSchema.getMaxno() + 1;
+
 	int tLength = tSchema.getNolength() - tPrefix.length() - String.valueOf(tMaxNo).length();
 	String tSerialNo = tPrefix;
 	for (int i = 0; i < tLength; i++) {
 	    tSerialNo += "0";
 	}
 	tSerialNo += tMaxNo;
-	tMaxNo++;
-	tSql = " update serialno set maxno=" + tMaxNo+ " where notype='WF' ";
-	session.update(tSql, SerialNoSchema.class);
+	tSql = " set maxno=" + tMaxNo+ " where notype='WF' ";
+	tSchema.setMaxno(tMaxNo);
+	session.update(tSchema);
+	session.flush();
+	session.close();
 	return tSerialNo;
     }
 
