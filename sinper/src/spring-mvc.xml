@@ -15,16 +15,23 @@
 
 	<bean id="userDao" class="com.art.dao.impl.UserDaoImpl" scope="prototype" />
 	<bean id="trafficDao" class="com.art.dao.impl.TraficDaoImpl" scope="prototype" />
-	<bean id="userService" class="com.art.service.UserService"  autowire="byType"  />
-	<bean id="trafficService" class="com.art.service.TrafficService"  autowire="byType"  />
+	<bean id="serialNoDao" class="com.art.dao.impl.SerialNoDaoImpl" scope="prototype" />
+	<bean id="missionDao" class="com.art.dao.impl.MissionDaoImpl" scope="prototype" />
+	<bean id="codeDao" class="com.art.dao.impl.CodeDaoImpl" scope="prototype" />
+	<bean id="userService" class="com.art.service.UserService"  autowire="byType"  scope="prototype" />
+	<bean id="trafficService" class="com.art.service.TrafficService"  autowire="byType"  scope="prototype" />
+	<bean id="serialNoService" class="com.art.service.SerialNoService"  autowire="byType"  scope="prototype" />
+	<bean id="codeService" class="com.art.service.CodeService"  autowire="byType"  scope="prototype" />
 	<bean id="CtrlLogin" class="com.art.ctrl.CtrlLogin"  autowire="byType"  />
 	<bean id="CtrlInManager" class="com.art.ctrl.CtrlInManager"  autowire="byType"  />
+	<bean id="CtrlCodeQuery" class="com.art.ctrl.CtrlCodeQuery"  autowire="byType"  />
 	<bean id="handerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
 		<property name="mappings"  ref="urlMappings" />
 	</bean>
 	<util:properties id="urlMappings">
 		<prop key="login.form">CtrlLogin</prop>
 		<prop key="in_resiter.form">CtrlInManager</prop>
+		<prop key="codequery.form">CtrlCodeQuery</prop>
 	</util:properties>
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
 		<property name="prefix"  value="/" />

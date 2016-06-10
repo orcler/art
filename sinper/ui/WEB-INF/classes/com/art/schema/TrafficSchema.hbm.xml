@@ -5,14 +5,15 @@
 		<id name="id" type="java.lang.Integer" column="id">
 			<generator class="identity" />
 		</id>
+		<property name="serialNo"	type="java.lang.String" 	column="serialNo" />
 		<property name="EngineNo"	type="java.lang.String" 	column="EngineNo" />
 		<property name="VIN"			type="java.lang.String" 	column="VIN" />
 		<property name="state"			type="java.lang.String" 	column="state" />
 		<property name="uwflag"		type="java.lang.String" 	column="uwflag" />
 		<property name="model"		type="java.lang.String" 	column="model" />
-		<property name="cost"			type="java.lang.String" 	column="cost"  />
+		<property name="cost"			type="java.lang.Double" column="cost"  />
 		<property name="cert"			type="java.lang.String" 	column="cert" />
-		<property name="mileage"	type="java.lang.Double" 	column="mileage"	/>
+		<property name="mileage"	type="java.lang.Double" column="mileage"	/>
 		<property name="color"		type="java.lang.String" 	column="color" />
 		<property name="attn"			type="java.lang.String" 	column="attn" />
 		<property name="phone"		type="java.lang.String" 	column="phone" />

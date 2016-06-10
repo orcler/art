@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC  "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 <hibernate-mapping>
-	<class name="com.art.schema.UserSchema" table="IUser">
+	<class name="com.art.schema.UserSchema" table="IUSER">
 		<id name="userId" type="java.lang.String" column="userid">
 			<generator class="assigned" />
 		</id>
