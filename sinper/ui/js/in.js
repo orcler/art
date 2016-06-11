@@ -7,7 +7,6 @@ function inRgterUI()
 	} else{
 		$('#DivTab').tabs('add',{title: '入库登记', href: './in/in_register.jsp', closable: true});
 	}
-	//showComCode();
 }
 
 //入库清单
@@ -47,11 +46,7 @@ function submitForm() {
 		var options = {
 			url : 'in_resiter.form',
 			success : function(data) {
-<<<<<<< HEAD
 				$.messager.alert(data);
-=======
-				alert(data);
->>>>>>> origin/master
 			}
 		}
 		$('#fm_in_save').ajaxSubmit(options);
@@ -60,36 +55,4 @@ function submitForm() {
 }
 
 
-<<<<<<< HEAD
-=======
-/*
- * function showRequest(formData, jqForm, options) { var queryString =
- * $.param(formData); alert('About to submit: \n\n' + queryString); return true; }
- * 
- * function showResponse(responseText, statusText, xhr, $form) { alert('status: ' +
- * statusText + '\n\nresponseText: \n' + responseText + '\n\nThe output div
- * should have already been updated with the responseText.'); }
- */
-
- function showResponse(responseText, statusText, xhr, $form) {
-	alert('status: '
-			+ statusText
-			+ '\n\nresponseText: \n'
-			+ responseText
-			+ '\n\nThe output div should have already been updated with the responseText.');
-}
-function showComCode() {
-	alert($('#comcode').html());
-	 $(document).ready(
-			 $.ajax({
-				 type: 'POST',
-				url : 'codequery.form?codetype=comcode',
-				success : function(data) {
-					alert($('#comcode').html());
-					$('#comcode').combobox('reload', data);
-				}
-			})
-	);
-}
->>>>>>> origin/master
 

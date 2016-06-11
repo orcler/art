@@ -22,21 +22,21 @@
 	<table cellpadding="5" >
 		<tr>
 			<td>入库发动机编码</td>
-			<td><input class="easyui-textbox" type="text" id="inuw_engineno"  name="inuw_engineno" /></td>
+			<td><input class="easyui-textbox" type="text" id="inuw_engineno"  readonly="readonly" name="inuw_engineno" /></td>
 			<td>机架号</td>
-			<td><input class="easyui-textbox" type="text" id="inuw_vin"  name="inuw_vin" ></td>
+			<td><input class="easyui-textbox" type="text" id="inuw_vin"  name="inuw_vin"  readonly="readonly" ></td>
 		</tr>
 		<tr>
 			<td>车型</td>
-			<td><input class="easyui-textbox" type="text" id="inuw_model"  name="inuw_model"  ></input></td>
+			<td><input class="easyui-textbox" type="text" id="inuw_model"  name="inuw_model"  readonly="readonly" ></input></td>
 			<td>车源</td>
-			<td><input class="easyui-textbox" type="text"  id="inuw_comname"  name="inuw_comname" ></input></td>
+			<td><input class="easyui-textbox" type="text"  id="inuw_comname"  name="inuw_comname"  readonly="readonly" ></input></td>
 		</tr>
 		<tr>
 			<td>价值</td>
-			<td><input class="easyui-textbox" type="text"  id="inuw_cost" name="inuw_cost" ></input>万</td>
+			<td><input class="easyui-textbox" type="text"  id="inuw_cost" name="inuw_cost" readonly="readonly"  ></input>万</td>
 			<td>行驶里程</td>
-			<td><input class="easyui-textbox" type="text"  id="inuw_mileage" name="inuw_mileage" data-options="required:false">KM</input></td>
+			<td><input class="easyui-textbox" type="text"  id="inuw_mileage" name="inuw_mileage" readonly="readonly" >KM</input></td>
 		</tr>
 		<tr>
 			<td>备注</td>
@@ -45,7 +45,7 @@
 	</table>
 	<div style="text-align:left;padding:5px">
 		<span style="margin-left:20px"/>
-		审核结论<select class="easyui-combobox" name="state" style="width:200px;">
+		审核结论<select class="easyui-combobox" name="inuw_uwstate" style="width:200px;">
 			<option value="1">通过</option>
 			<option value="2">退回</option>
 			<option value="3">拒绝</option>
@@ -53,7 +53,8 @@
 		<br>
 		<span style="margin-left:180px"/>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">保存</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a></br>
+		<input  type="textbox"  id="inuw_serialno" name="inuw_serialno"  hidden="hidden">
 	</div>
 </form>
 <script>
@@ -62,7 +63,8 @@ $(document).ready(function() {
 		onClickRow: function () {
 			var row = $('#inuw_dg').datagrid('getSelected');
 			if (row){
-				$('#inuw_engineno').text(row.EngineNo);
+				
+				$('#inuw_serialno').val(row.EngineNo);
 				$('#inuw_engineno').textbox("setValue", row.EngineNo);
 				$('#inuw_vin').textbox("setValue", row.VIN);
 				$('#inuw_model').textbox("setValue", row.model);
