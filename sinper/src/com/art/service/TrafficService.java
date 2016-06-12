@@ -38,6 +38,68 @@ public class TrafficService {
 	return null;
     }
     
+    public String modifyRecord(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    MissionSchema tMissionSchema = missionDao.getBySerialNo(session, aMissionSchema);
+	    aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	    trafficDao.update(session, aTrafficSchema);
+	    missionDao.update(session, aMissionSchema);
+	    tTransaction.commit();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库失败，发动机号：" + aTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
+    public String inuw(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	aMissionSchema.setActivityid("1000000002");
+	MissionSchema tMissionSchema = missionDao.getBySerialNo(session, aMissionSchema);
+	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	tTrafficSchema.setUwflag(aTrafficSchema.getUwflag());
+	tTrafficSchema.setRemark(aTrafficSchema.getRemark());
+	
+	String tUwFlag = aTrafficSchema.getUwflag();
+	String tActivityId = "1000000003";//默认审核通
+	String tSubMissionid = tMissionSchema.getSubmissionid();
+	if ("1".equals(tUwFlag)) {
+		tActivityId = "1000000003";
+	} else if ("2".equals(tUwFlag)) {//回退
+		tActivityId = "1000000001";
+		int tIdx = Integer.valueOf(tSubMissionid) + 1;
+		tSubMissionid = String.valueOf(tIdx);
+		
+	} else {
+		tActivityId = "1000000000";
+	}
+	tMissionSchema.setActivityid(tActivityId);
+	tMissionSchema.setSubmissionid(tSubMissionid);
+	tMissionSchema.setModifydate(aMissionSchema.getModifydate());
+	tMissionSchema.setModifytime(aMissionSchema.getModifytime());
+	session.clear();
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    trafficDao.update(session, tTrafficSchema);
+	    missionDao.update(session, tMissionSchema);
+	    tTransaction.commit();
+	    session.flush();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库失败，发动机号：" + aTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
     public ITrafficDao getTrafficDao() {
 	return trafficDao;
     }

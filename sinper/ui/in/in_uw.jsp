@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<form id="ff" method="post">
+<form id="inuw_form" method="post">
 	<table class="easyui-datagrid" title="入库待审核列表" id="inuw_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inuw',method:'post',singleSelect:true,fitColumns:true">
 	<thead>
 		<tr>
@@ -15,6 +15,7 @@
 			<th data-options="field:'comname'" width="80">车源</th>
 			<th data-options="field:'indate'" width="80">入库日期</th>
 			<th data-options="field:'operator'" width="80">操作员</th>
+			<th data-options="field:'remark'" width="80">操作员</th>
 		</tr>
 	</thead>
 	</table>
@@ -40,7 +41,7 @@
 		</tr>
 		<tr>
 			<td>备注</td>
-			<td colspan='3'><input class="easyui-textbox"  id="inuw_remark" name="inuw_remark" data-options="multiline:true" style="width:400px;height:60px"/></td>
+			<td colspan='3'><input class="easyui-textbox"  id="inuw_remark" name="inuw_remark" data-options="multiline:true" style="width:360px;height:60px"/></td>
 		</tr>
 	</table>
 	<div style="text-align:left;padding:5px">
@@ -52,7 +53,7 @@
 		</select>
 		<br>
 		<span style="margin-left:180px"/>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">保存</a>
+		<a href="javascript:iu_submit()" class="easyui-linkbutton" >保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a></br>
 		<input  type="textbox"  id="inuw_serialno" name="inuw_serialno"  hidden="hidden">
 	</div>
@@ -63,8 +64,7 @@ $(document).ready(function() {
 		onClickRow: function () {
 			var row = $('#inuw_dg').datagrid('getSelected');
 			if (row){
-				
-				$('#inuw_serialno').val(row.EngineNo);
+				$('#inuw_serialno').val(row.SerialNo);
 				$('#inuw_engineno').textbox("setValue", row.EngineNo);
 				$('#inuw_vin').textbox("setValue", row.VIN);
 				$('#inuw_model').textbox("setValue", row.model);
@@ -72,6 +72,7 @@ $(document).ready(function() {
 				$('#inuw_cert').textbox("setValue", row.cert);
 				$('#inuw_cost').textbox("setValue", row.cost);
 				$('#inuw_mileage').textbox("setValue", row.mileage);
+				$('#inuw_remark').textbox("setValue", row.remark);
 			}
 		}
 	})

@@ -16,4 +16,6 @@ public interface IMissionDao {
 
     public List<?> query(Session aSession, String aSql);
     
+    public MissionSchema getBySerialNo(Session aSession, MissionSchema aMissionSchema);
+    
 }

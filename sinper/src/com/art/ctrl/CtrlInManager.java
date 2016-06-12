@@ -25,8 +25,33 @@ public class CtrlInManager implements Controller {
 		String tUserId = (String) tHttpSession.getAttribute("userId");
 		Date tCurDate = PubFun.getCurSqlDate();
 		String tCurTime = PubFun.getCurTime();
+		String tOldSerialNo = request.getParameter("ir_wfserialno");
+		//工作流
+		MissionSchema tMissionSchema = new MissionSchema();
+		String tWF_SerialNo = null;
+		String tTF_SerialNo = null;
+		if (tOldSerialNo != null && !"".equals(tOldSerialNo)) {
+		    tWF_SerialNo = tOldSerialNo;
+		} else {
+		    tWF_SerialNo = PubFun.getSerialNo("WF");
+		    tTF_SerialNo = PubFun.getSerialNo("TF");
+		    tMissionSchema.setSubmissionid("1");
+		}
+		tMissionSchema.setMissionid(tWF_SerialNo);
+		tMissionSchema.setMissionprop1(tTF_SerialNo);//入库流水号
+		tMissionSchema.setActivityid("1000000002");
+		tMissionSchema.setActivitystatus("0");
+		tMissionSchema.setProcessid("0000000001");
+		tMissionSchema.setCreateoperator(tUserId);
+		tMissionSchema.setLastoperator(tUserId);
+		tMissionSchema.setMainmissionid(tWF_SerialNo);
+		tMissionSchema.setMakedate(tCurDate);
+		tMissionSchema.setMaketime(tCurTime);
+		tMissionSchema.setModifydate(tCurDate);
+		tMissionSchema.setModifytime(tCurTime);
+		tMissionSchema.setIndate(tCurDate);
+		tMissionSchema.setIntime(tCurTime);
 		
-		String tTF_SerialNo = PubFun.getSerialNo("TF");
 		String tEngineNo = request.getParameter("EngineNo");
 		String tVIN = request.getParameter("VIN");
 		String tModel = request.getParameter("model");
@@ -75,24 +100,6 @@ public class CtrlInManager implements Controller {
 		tTrafficSchema.setState("1"); //入库
 		tTrafficSchema.setUwflag("1");//入库待审核
 		
-		//工作流
-		MissionSchema tMissionSchema = new MissionSchema();
-		String tWF_SerialNo = PubFun.getSerialNo("WF");
-		tMissionSchema.setMissionid(tWF_SerialNo);
-		tMissionSchema.setMissionprop1(tTF_SerialNo);//入库流水号
-		tMissionSchema.setActivityid("1000000002");
-		tMissionSchema.setActivitystatus("0");
-		tMissionSchema.setProcessid("0000000001");
-		tMissionSchema.setCreateoperator(tUserId);
-		tMissionSchema.setLastoperator(tUserId);
-		tMissionSchema.setMainmissionid(tWF_SerialNo);
-		tMissionSchema.setSubmissionid("1");
-		tMissionSchema.setMakedate(tCurDate);
-		tMissionSchema.setMaketime(tCurTime);
-		tMissionSchema.setModifydate(tCurDate);
-		tMissionSchema.setModifytime(tCurTime);
-		tMissionSchema.setIndate(tCurDate);
-		tMissionSchema.setIntime(tCurTime);
 		
 		if (checkerData()){
 		    msg = trafficService.inRecord(tTrafficSchema, tMissionSchema);

@@ -13,6 +13,8 @@ public interface ITrafficDao {
     public boolean del(Session aSession, TrafficSchema aTrafficSchema);
 
     public boolean update(Session aSession, TrafficSchema aTrafficSchema);
+    
+    public TrafficSchema query(Session aSession, TrafficSchema aTrafficSchema);
 
     public List<?> query(Session aSession, String aSql);
 

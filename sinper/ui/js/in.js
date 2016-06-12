@@ -32,7 +32,7 @@ function confInPrint()
 }
 
 //in_register subimt
-function submitForm() {
+function ir_submit() {
 	var tEngineNo = $('#EngineNo').val();
 	var tVIN = $('#VIN').val();
 	if (tEngineNo== null || tEngineNo == '') {
@@ -46,13 +46,48 @@ function submitForm() {
 		var options = {
 			url : 'in_resiter.form',
 			success : function(data) {
-				$.messager.alert(data);
+				//$.messager.alert('入库登记',data);
+				initRgsterGrid();
 			}
 		}
 		$('#fm_in_save').ajaxSubmit(options);
 	});
+	
 	$('#fm_in_save').clearForm();
 }
 
+function initRgsterGrid() {
+	alert('initRgsterGrid');
+	$(document).ready(function() {
+	    $('#inrg_dg').datagrid({
+	    	method: 'get', 
+	    	url:'./dataquery.form?qtype=inRgster'
+	    });   
+	})
+}
 
+function initUwGrid() {
+	$(document).ready(function() {
+	    $('#inuw_dg').datagrid({
+	    	method: 'get', 
+	    	url:'./dataquery.form?qtype=inuw'
+	    });   
+	})
+}
+//入库审核相关开始
+function iu_submit() {
+	$(document).ready(function() {
+		var options = {
+			url : 'inuw.form',
+			success : function(data) {
+				$.messager.alert('入库审核',data);
+			}
+		}
+		$('#inuw_form').ajaxSubmit(options);
+	});
+	initUwGrid();
+	$('#inuw_form').clearForm();
+}
+
+//入库审核相关结束
 

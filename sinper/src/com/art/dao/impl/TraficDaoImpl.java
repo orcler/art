@@ -2,6 +2,7 @@ package com.art.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -54,19 +55,16 @@ public class TraficDaoImpl implements ITrafficDao {
 
     @Override
     public boolean update(Session aSession, TrafficSchema aTrafficSchema) {
-	Session session = HibernateUtil.getSession();
-	Transaction tTransaction;
-	tTransaction = session.beginTransaction();
-	try {
-	    session.update(aTrafficSchema);
-	    tTransaction.commit();
-	} catch (Exception e) {
-	    tTransaction.rollback();
-	    return false;
-	} finally {
-	    session.close();
-	}
+	aSession.update(aTrafficSchema);
 	return true;
+    }
+
+    @Override
+    public TrafficSchema query(Session aSession, TrafficSchema aTrafficSchema) {
+	String tSql = "  from TrafficSchema where serialNo='" +aTrafficSchema.getSerialNo() + "' ";
+	Query query = aSession.createQuery(tSql);
+	TrafficSchema tSchema = (TrafficSchema) query.list().get(0);
+	return tSchema;
     }
 
 }

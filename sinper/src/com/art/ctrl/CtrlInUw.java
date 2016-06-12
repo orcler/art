@@ -28,52 +28,21 @@ public class CtrlInUw implements Controller {
 		
 		String  tSerialNo = request.getParameter("inuw_serialno");
 		String tUwFlag = request.getParameter("inuw_uwstate");
-		
-		Date tInDate =tCurDate;
-		String tIntime  = tCurTime;
-		Date tOutdate = tCurDate;
-		String tOuttime = tCurTime;
 		String tRemark  = request.getParameter("inuw_remark");
  
-		
 		//入库信息
 		TrafficSchema tTrafficSchema = new TrafficSchema();
-		tTrafficSchema.setIndate(tInDate);
-		tTrafficSchema.setIntime(tIntime);
 		tTrafficSchema.setRemark(tRemark);
 		tTrafficSchema.setState("1"); //入库
 		tTrafficSchema.setUwflag(tUwFlag);//入库待审核
-		String tActivityId = "1000000003";//默认审核通
-		if ("1".equals(tUwFlag)) {
-			tActivityId = "1000000003";
-		} else if ("2".equals(tUwFlag)) {//回退
-			tActivityId = "1000000001";
-		} else {
-			tActivityId = "1000000000";
-		}
-		
-		
-		
+
 		//工作流
 		MissionSchema tMissionSchema = new MissionSchema();
-		String tWF_SerialNo = PubFun.getSerialNo("WF");
-		tMissionSchema.setMissionid(tWF_SerialNo);
-		tMissionSchema.setMissionprop1(tSerialNo);//入库流水号
-		tMissionSchema.setActivityid("1000000002");
-		tMissionSchema.setActivitystatus("0");
-		tMissionSchema.setProcessid("0000000001");
-		tMissionSchema.setCreateoperator(tUserId);
-		tMissionSchema.setLastoperator(tUserId);
-		tMissionSchema.setMainmissionid(tWF_SerialNo);
-		tMissionSchema.setSubmissionid("1");
-		tMissionSchema.setMakedate(tCurDate);
-		tMissionSchema.setMaketime(tCurTime);
+		tMissionSchema.setMissionid(tSerialNo);
 		tMissionSchema.setModifydate(tCurDate);
 		tMissionSchema.setModifytime(tCurTime);
-		tMissionSchema.setIndate(tCurDate);
-		tMissionSchema.setIntime(tCurTime);
 		
-		msg = trafficService.inRecord(tTrafficSchema, tMissionSchema);
+		msg = trafficService.inuw(tTrafficSchema, tMissionSchema);
 		if (msg == null) {
 		    msg = "保存成功！";
 		}
