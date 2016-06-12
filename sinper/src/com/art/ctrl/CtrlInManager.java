@@ -30,8 +30,11 @@ public class CtrlInManager implements Controller {
 		MissionSchema tMissionSchema = new MissionSchema();
 		String tWF_SerialNo = null;
 		String tTF_SerialNo = null;
+		System.out.println(tOldSerialNo);
+		String tType = "INSERT";
 		if (tOldSerialNo != null && !"".equals(tOldSerialNo)) {
 		    tWF_SerialNo = tOldSerialNo;
+		    tType = "UPDATE";
 		} else {
 		    tWF_SerialNo = PubFun.getSerialNo("WF");
 		    tTF_SerialNo = PubFun.getSerialNo("TF");
@@ -91,7 +94,7 @@ public class CtrlInManager implements Controller {
 		tTrafficSchema.setCert(tCert);
 		tTrafficSchema.setMileage(tMileage);
 		tTrafficSchema.setColor(tColor);
-		tTrafficSchema.setAttn(tAttn	);
+		tTrafficSchema.setAttn(tAttn);
 		tTrafficSchema.setPhone(tPhone);
 		tTrafficSchema.setComcode(tComcode);
 		tTrafficSchema.setIndate(tInDate);
@@ -102,7 +105,11 @@ public class CtrlInManager implements Controller {
 		
 		
 		if (checkerData()){
-		    msg = trafficService.inRecord(tTrafficSchema, tMissionSchema);
+			if ("INSERT".equals(tType)) {
+				msg = trafficService.inRecord(tTrafficSchema, tMissionSchema);
+			} else {
+				msg = trafficService.modifyRecord(tTrafficSchema, tMissionSchema);
+			}
 		}
 		if (msg == null) {
 		    msg = "保存成功！";

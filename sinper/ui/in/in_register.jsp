@@ -8,11 +8,12 @@
 			<th data-options="field:'EngineNo'" width="80">发动机编码</th>
 			<th data-options="field:'VIN'" width="80">机架编码</th>
 			<th data-options="field:'model'" width="80">车型</th>
+			<th data-options="field:'cert'" width="80">合格证号</th>
 			<th data-options="field:'cost',align:'right' " width="80">价值</th>
 			<th data-options="field:'mileage',align:'right'" width="80">行驶里程（km）</th>
 			<th data-options="field:'color'" width="80">颜色</th>
 			<th data-options="field:'attn'" width="80">联系人</th>
-			<th data-options="field:'comcode'" width="80">车源编码</th>
+			<th data-options="field:'comcode',hidden:true" width="80">车源编码</th>
 			<th data-options="field:'comname'" width="80">车源</th>
 			<th data-options="field:'indate'" width="80">入库日期</th>
 			<th data-options="field:'operator'" width="80">操作员</th>
@@ -62,7 +63,7 @@
 		<span style="margin-left:180px"/><a href="javascript:ir_submit()" class="easyui-linkbutton" >保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
 	</div>
-	<input  type="textbox"  id="ir_wfserialno" name="ir_serialno"  hidden="hidden">
+	<input  type="textbox"  id="ir_wfserialno" name="ir_wfserialno"  hidden="hidden">
 </form>
 <script>
 $(document).ready(function() {
@@ -70,11 +71,10 @@ $(document).ready(function() {
 		onClickRow: function () {
 			var row = $('#inrg_dg').datagrid('getSelected');
 			if (row){
-				$('#ir_serialno').val(row.SerialNo);
+				$('#ir_wfserialno').val(row.SerialNo);
 				$('#EngineNo').textbox("setValue", row.EngineNo);
 				$('#VIN').textbox("setValue", row.VIN);
 				$('#model').textbox("setValue", row.model);
-				$('#comcode').textbox("setValue", row.comname);
 				$('#cert').textbox("setValue", row.cert);
 				$('#cost').textbox("setValue", row.cost);
 				$('#mileage').textbox("setValue", row.mileage);
@@ -82,7 +82,9 @@ $(document).ready(function() {
 				$('#attn').textbox("setValue", row.attn);
 				$('#phone').textbox("setValue", row.phone);
 				$('#remark').textbox("setValue", row.remark);
-				$('#comcode').combobox('select', row.comcode);
+				$('#comcode').combobox("setValue", row.comcode);
+				$('#comcode').val(row.comcode);
+				alert($('#comcode').combobox("getValue"));
 			}
 		}
 	})

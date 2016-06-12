@@ -33,7 +33,7 @@ public class CtrlDataQuery implements Controller {
     }
 
     public String inRgster_json() throws Exception {
-	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
+	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
 		+ "b.phone, b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000001' and a.missionprop1=b.SerialNo and a.createoperator='" + userId + "' ";
 	System.out.println(tSql);
 	DataSource tDataSource = new DataSource();
@@ -48,11 +48,12 @@ public class CtrlDataQuery implements Controller {
 	    String tVIN = tResultSet.getString("VIN");
 	    String tmodel = tResultSet.getString("model");
 	    double tcost = tResultSet.getDouble("cost");
+	    String tcert = tResultSet.getString("cert");
 	    double tmileage = tResultSet.getDouble("mileage");
 	    String tcolor = tResultSet.getString("color");
 	    String tattn = tResultSet.getString("attn");
 	    String tphone = tResultSet.getString("phone");
-	    String tcomcode = tResultSet.getString("comname");
+	    String tcomcode = tResultSet.getString("comcode");
 	    String tcomname = tResultSet.getString("comname");
 	    String tindate = tResultSet.getString("indate");
 	    String tcreateoperator = tResultSet.getString("createoperator");
@@ -62,6 +63,7 @@ public class CtrlDataQuery implements Controller {
 	    tContext += "\"VIN\":\"" + tVIN + "\",";
 	    tContext += "\"model\":\"" + tmodel + "\",";
 	    tContext += "\"cost\":\"" + tcost + "\",";
+	    tContext += "\"cert\":\"" + tcert + "\",";
 	    tContext += "\"mileage\":\"" + tmileage + "\",";
 	    tContext += "\"color\":\"" + tcolor + "\",";
 	    tContext += "\"attn\":\"" + tattn + "\",";

@@ -46,7 +46,7 @@ function ir_submit() {
 		var options = {
 			url : 'in_resiter.form',
 			success : function(data) {
-				//$.messager.alert('入库登记',data);
+				$.messager.alert('入库登记',data);
 				initRgsterGrid();
 			}
 		}
@@ -57,7 +57,6 @@ function ir_submit() {
 }
 
 function initRgsterGrid() {
-	alert('initRgsterGrid');
 	$(document).ready(function() {
 	    $('#inrg_dg').datagrid({
 	    	method: 'get', 
@@ -81,11 +80,11 @@ function iu_submit() {
 			url : 'inuw.form',
 			success : function(data) {
 				$.messager.alert('入库审核',data);
+				initUwGrid();
 			}
 		}
 		$('#inuw_form').ajaxSubmit(options);
 	});
-	initUwGrid();
 	$('#inuw_form').clearForm();
 }
 

@@ -42,8 +42,14 @@ public class TrafficService {
 	session = HibernateUtil.getSession();
 	Transaction tTransaction = session.beginTransaction();
 	try {
-	    MissionSchema tMissionSchema = missionDao.getBySerialNo(session, aMissionSchema);
+	    MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000001");
+	    aMissionSchema.setId(tMissionSchema.getId());
+	    aMissionSchema.setSubmissionid(tMissionSchema.getSubmissionid());
+	    aMissionSchema.setMissionprop1(tMissionSchema.getMissionprop1());
 	    aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	    TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	    aTrafficSchema.setId(tTrafficSchema.getId());
+	    session.clear();
 	    trafficDao.update(session, aTrafficSchema);
 	    missionDao.update(session, aMissionSchema);
 	    tTransaction.commit();
@@ -60,7 +66,7 @@ public class TrafficService {
     public String inuw(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
 	session = HibernateUtil.getSession();
 	aMissionSchema.setActivityid("1000000002");
-	MissionSchema tMissionSchema = missionDao.getBySerialNo(session, aMissionSchema);
+	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000002");
 	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
 	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
 	tTrafficSchema.setUwflag(aTrafficSchema.getUwflag());

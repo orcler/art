@@ -34,8 +34,8 @@ public class MissionDaoImpl implements IMissionDao {
     }
 
     @Override
-    public MissionSchema getBySerialNo(Session aSession, MissionSchema aMissionSchema) {
-	String tSql = " from MissionSchema where missionid='" + aMissionSchema.getMissionid() + "' and activityid='" + aMissionSchema.getActivityid() + "' ";
+    public MissionSchema getByMissionId(Session aSession, String aMissionId, String aActivityId) {
+	String tSql = " from MissionSchema where missionid='" + aMissionId + "' and activityid='" +aActivityId + "' ";
 	Query query = aSession.createQuery(tSql);
 	MissionSchema  aSchema = (MissionSchema) query.list().get(0);
 	return aSchema;
