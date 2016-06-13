@@ -27,19 +27,19 @@ function confInPrint()
 	if (isExists){
 		$('#DivTab').tabs('select','入库及打印凭证');
 	} else{
-		$('#DivTab').tabs('add',{title: '入库及打印凭证', href: './in/conf_print.html', closable: true});
+		$('#DivTab').tabs('add',{title: '入库及打印凭证', href: './in/inConPrint.jsp', closable: true});
 	}
 }
 
-//in_register subimt
+//入库登记相关 -------------------------------------------------------------------------------------------
 function ir_submit() {
 	var tEngineNo = $('#EngineNo').val();
 	var tVIN = $('#VIN').val();
 	if (tEngineNo== null || tEngineNo == '') {
-		alert("发动机编码不允许为空");
+		$.messager.alert("发动机编码不允许为空");
 		return;
 	}else	if (tVIN== null || tVIN == '') {
-		alert("机架号不允许为空");
+		$.messager.alert("机架号不允许为空");
 		return;
 	} 
 	$(document).ready(function() {
@@ -64,7 +64,9 @@ function initRgsterGrid() {
 	    });   
 	})
 }
+//入库登记相关结束
 
+//入库审核相关开始--------------------------------------------------------------------------
 function initUwGrid() {
 	$(document).ready(function() {
 	    $('#inuw_dg').datagrid({
@@ -73,7 +75,6 @@ function initUwGrid() {
 	    });   
 	})
 }
-//入库审核相关开始
 function iu_submit() {
 	$(document).ready(function() {
 		var options = {
@@ -89,4 +90,31 @@ function iu_submit() {
 }
 
 //入库审核相关结束
+
+//入库确认相关开始----------------------------------------------------------------------------
+
+function inConfGrid() {
+	$(document).ready(function() {
+	    $('#inconf_dg').datagrid({
+	    	method: 'get', 
+	    	url:'./dataquery.form?qtype=inconf'
+	    });   
+	})
+}
+
+function incf_search() {
+	var tcomcode =$('#incf_comcode').combobox('getValue');
+	var tincf_engineno= $('#incf_engineno').val();
+	var tincf_startdate =$('#incf_startdate').datebox('getValue');
+	var tincf_enddate = $('#incf_enddate').datebox('getValue');
+	var tUrl = " ./dataquery.form?qtype=inconf&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
+	$(document).ready(function() {
+	    $('#inconf_dg').datagrid({
+	    	method: 'get', 
+	    	url:tUrl
+	    });   
+	})
+}
+
+//入库确认相关结束----------------------------------------------------------------------------
 

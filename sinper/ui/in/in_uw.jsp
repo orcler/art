@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <form id="inuw_form" method="post">
-	<table class="easyui-datagrid" title="入库待审核列表" id="inuw_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inuw',method:'post',singleSelect:true,fitColumns:true">
+	<table class="easyui-datagrid" title="入库待审核列表" id="inuw_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inuw',method:'get',singleSelect:true,fitColumns:true">
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
@@ -15,7 +15,6 @@
 			<th data-options="field:'comname'" width="80">车源</th>
 			<th data-options="field:'indate'" width="80">入库日期</th>
 			<th data-options="field:'operator'" width="80">操作员</th>
-			<th data-options="field:'remark'" width="80">操作员</th>
 		</tr>
 	</thead>
 	</table>

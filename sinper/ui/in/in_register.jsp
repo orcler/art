@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <form id="fm_in_save" action="in_resiter.form"  method="post" >
-		<table class="easyui-datagrid" title="入库登记列表" id="inrg_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inRgster',method:'post',singleSelect:true,fitColumns:true">
+		<table class="easyui-datagrid" title="入库登记列表" id="inrg_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inRgster',method:'get',singleSelect:true,fitColumns:true">
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
