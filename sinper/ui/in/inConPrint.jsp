@@ -26,8 +26,8 @@
 		起始日期: <input class="easyui-datebox"  id="incf_startdate" name="incf_startdate"  style="width:110px">
 		终止日期: <input class="easyui-datebox"  id="incf_enddate" name="incf_enddate"  style="width:110px">
 		<a href="javascript:incf_search()" class="easyui-linkbutton"  id="incf_search" name="incf_search"  iconCls="icon-search">搜索</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton"  >打印凭证</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" >入库确认</a>
+		<a href="javascript:incf_print()" class="easyui-linkbutton"  >打印凭证</a>
+		<a href="javascript:inconf_submit()" class="easyui-linkbutton" >入库确认</a>
 </div>
 <input type="hidden" id="inconf_serialno" name="inconf_serialno" >
 </form>

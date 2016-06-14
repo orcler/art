@@ -34,6 +34,7 @@ System.out.println("index - " + tPwd);
  					<a href="javascript:inRgterUI()"><font size='3'>入库登记</font></a></br>
 					<a href="javascript:inUw()"><font size='3'>入库审核</font></a></br>
 					<a href="javascript:confInPrint()"><font size='3'>打印凭证和入库确认</font></a></br>
+					<a href="javascript:batchregster()"><font size='3'>批量入库</font></a></br>
 				</div>
 				<div title="出库管理" data-options="selected:false" style="padding:10px;">
 					<a href="javascript:outRgterUI()"><font size='3'>经销商出库申请</font></a></br>

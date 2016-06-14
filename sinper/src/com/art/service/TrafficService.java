@@ -107,15 +107,53 @@ public class TrafficService {
 	return null;
     }
     
-    public String printPdf(MissionSchema aMissionSchema) {
+    
+    public String inconf(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000003");
+	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	if (null == tTrafficSchema.getInfo1() || "".equals(tTrafficSchema.getInfo1())) {
+	    return "还未打印凭证，不能核销！";
+	}
+	tTrafficSchema.setUwflag("0");
+	tMissionSchema.setActivityid("1000000004");
+	tMissionSchema.setModifydate(aMissionSchema.getModifydate());
+	tMissionSchema.setModifytime(aMissionSchema.getModifytime());
+	tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    trafficDao.update(session, tTrafficSchema);
+	    missionDao.update(session, tMissionSchema);
+	    tTransaction.commit();
+	    session.flush();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库确认失败，发动机号：" + tTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
+    
+    public String printPdf(MissionSchema aMissionSchema, String tPath) {
     	session = HibernateUtil.getSession();
     	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000003");
     	TrafficSchema tTrafficSchema = new TrafficSchema();
+    	aMissionSchema.setMissionprop1(tMissionSchema.getMissionprop1());//借用传输文件名
     	tTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+    	session.clear();
     	tTrafficSchema = trafficDao.query(session, tTrafficSchema);
-    	session.close();
     	try {
-			boolean tIsCreated = new InConfPirnt().printPdf(tTrafficSchema);
+			boolean tIsCreated = new InConfPirnt().printInPdf(tTrafficSchema, tPath);
+			if (tIsCreated) {
+			    tTrafficSchema.setInfo1("1");//打印凭证打印标识
+			    session.saveOrUpdate(tTrafficSchema);
+			    session.flush();
+			    session.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

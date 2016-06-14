@@ -31,6 +31,17 @@ function confInPrint()
 	}
 }
 
+//批量入库及打印凭证
+function batchregster()
+{
+	var isExists = $('#DivTab').tabs('exists','批量入库');
+	if (isExists){
+		$('#DivTab').tabs('select','批量入库');
+	} else{
+		$('#DivTab').tabs('add',{title: '批量入库', href: './in/inBatchRegster.jsp', closable: true});
+	}
+}
+
 //入库登记相关 -------------------------------------------------------------------------------------------
 function ir_submit() {
 	var tEngineNo = $('#EngineNo').val();
@@ -116,5 +127,51 @@ function incf_search() {
 	})
 }
 
+function incf_print() {
+	var tSerialNo = $('#inconf_serialno').val();
+	if (tSerialNo == null || tSerialNo == '') {
+		$.messager.alert('入库凭证打印','请选择一条数据');
+		return;
+	}
+	 $('#inconf_form').attr('action','print.form?type=in');
+	 $('#inconf_form').attr('target','_blank');
+	 $('#inconf_form').submit();
+}
+
+function inconf_submit() {
+	var tSerialNo = $('#inconf_serialno').val();
+	if (tSerialNo == null || tSerialNo == '') {
+		$.messager.alert('入库凭证打印','请选择一条数据');
+		return;
+	}
+	$(document).ready(function() {
+		var options = {
+			url : 'inconf.form',
+			success : function(data) {
+				$.messager.alert('入库确认',data);
+				incf_search();
+			}
+		}
+		$('#inconf_form').ajaxSubmit(options);
+	});
+	$('#inconf_form').clearForm();
+}
+
 //入库确认相关结束----------------------------------------------------------------------------
 
+//批量上传开始--------------------------------------------------------------------------------
+function batchupdate() {
+	$(document).ready(function() {
+		var options = {
+			url : 'upload.form',
+			 type:'post',  
+			 success : function(data) {
+				$.messager.alert('批量入库',data);
+			 }
+		}
+		$('#inbatch_form').ajaxSubmit(options);
+	});
+	$('#inbatch_form').clearForm();
+}
+
+//批量上传结束--------------------------------------------------------------------------------

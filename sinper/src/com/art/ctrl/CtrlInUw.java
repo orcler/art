@@ -41,6 +41,7 @@ public class CtrlInUw implements Controller {
 		tMissionSchema.setMissionid(tSerialNo);
 		tMissionSchema.setModifydate(tCurDate);
 		tMissionSchema.setModifytime(tCurTime);
+		tMissionSchema.setLastoperator(tUserId);
 		
 		msg = trafficService.inuw(tTrafficSchema, tMissionSchema);
 		if (msg == null) {
