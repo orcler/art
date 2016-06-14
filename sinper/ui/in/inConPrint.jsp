@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
-			<th data-options="field:'SerialNo'" width="140">流水号</th>
+			<th data-options="field:'SerialNo'" width="150">流水号</th>
 			<th data-options="field:'EngineNo'" width="100">发动机编码</th>
 			<th data-options="field:'VIN'" width="100">机架编码</th>
 			<th data-options="field:'model'" width="100">车型</th>
@@ -26,7 +26,20 @@
 		起始日期: <input class="easyui-datebox"  id="incf_startdate" name="incf_startdate"  style="width:110px">
 		终止日期: <input class="easyui-datebox"  id="incf_enddate" name="incf_enddate"  style="width:110px">
 		<a href="javascript:incf_search()" class="easyui-linkbutton"  id="incf_search" name="incf_search"  iconCls="icon-search">搜索</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">打印凭证</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">入库确认</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton"  >打印凭证</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" >入库确认</a>
 </div>
+<input type="hidden" id="inconf_serialno" name="inconf_serialno" >
 </form>
+<script>
+$(document).ready(function() {
+	$('#inconf_dg').datagrid({
+		onClickRow: function () {
+			var row = $('#inconf_dg').datagrid('getSelected');
+			if (row){
+				$('#inconf_serialno').val(row.SerialNo);
+			}
+		}
+	})
+});
+</script>

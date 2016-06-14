@@ -23,98 +23,22 @@ public class CtrlInConfPrint implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession tHttpSession = request.getSession();
 		String tUserId = (String) tHttpSession.getAttribute("userId");
-		Date tCurDate = PubFun.getCurSqlDate();
-		String tCurTime = PubFun.getCurTime();
-		String tOldSerialNo = request.getParameter("ir_wfserialno");
+		String tWF_SerialNo = request.getParameter("inconf_serialno");
 		//工作流
 		MissionSchema tMissionSchema = new MissionSchema();
-		String tWF_SerialNo = null;
-		String tTF_SerialNo = null;
-		System.out.println(tOldSerialNo);
-		String tType = "INSERT";
-		if (tOldSerialNo != null && !"".equals(tOldSerialNo)) {
-		    tWF_SerialNo = tOldSerialNo;
-		    tType = "UPDATE";
-		} else {
-		    tWF_SerialNo = PubFun.getSerialNo("WF");
-		    tTF_SerialNo = PubFun.getSerialNo("TF");
-		    tMissionSchema.setSubmissionid("1");
+		System.out.println(tWF_SerialNo);
+		if (tWF_SerialNo == null && "".equals(tWF_SerialNo)) {
+			return new ModelAndView("index");
 		}
 		tMissionSchema.setMissionid(tWF_SerialNo);
-		tMissionSchema.setMissionprop1(tTF_SerialNo);//入库流水号
-		tMissionSchema.setActivityid("1000000002");
-		tMissionSchema.setActivitystatus("0");
 		tMissionSchema.setProcessid("0000000001");
-		tMissionSchema.setCreateoperator(tUserId);
-		tMissionSchema.setLastoperator(tUserId);
-		tMissionSchema.setMainmissionid(tWF_SerialNo);
-		tMissionSchema.setMakedate(tCurDate);
-		tMissionSchema.setMaketime(tCurTime);
-		tMissionSchema.setModifydate(tCurDate);
-		tMissionSchema.setModifytime(tCurTime);
-		tMissionSchema.setIndate(tCurDate);
-		tMissionSchema.setIntime(tCurTime);
+		msg = trafficService.printPdf(tMissionSchema);
 		
-		String tEngineNo = request.getParameter("EngineNo");
-		String tVIN = request.getParameter("VIN");
-		String tModel = request.getParameter("model");
-		String tStrCost = request.getParameter("cost");
-		String tCert = request.getParameter("cert");
-		String tStrMileage = request.getParameter("mileage");
-		String tColor = request.getParameter("color");
-		String tAttn = request.getParameter("attn");
-		String tPhone  = request.getParameter("phone");
-		String tComcode = request.getParameter("comcode");
-		Date tInDate =tCurDate;
-		String tIntime  = tCurTime;
-		Date tOutdate = tCurDate;
-		String tOuttime = tCurTime;
-		String tRemark  = request.getParameter("remark");
-		System.out.println("----" + tAttn);
-		if (tEngineNo == null || tEngineNo == null)
-		{
-			return new ModelAndView("login");
-		}
-		double tCost = 0.0;
-		if (tStrCost != null && !"".equals(tStrCost)) {
-		    tCost = Double.parseDouble(tStrCost);
-		}
-		double tMileage = 0.0;
-		if (tStrMileage != null && !"".equals(tStrMileage)) {
-		    tMileage = Double.parseDouble(tStrMileage);
-		}
-		
-		//入库信息
-		TrafficSchema tTrafficSchema = new TrafficSchema();
-		tTrafficSchema.setSerialNo(tTF_SerialNo);
-		tTrafficSchema.setEngineNo(tEngineNo);
-		tTrafficSchema.setVIN	(tVIN);
-		tTrafficSchema.setModel(tModel);
-		tTrafficSchema.setCost(tCost);
-		tTrafficSchema.setCert(tCert);
-		tTrafficSchema.setMileage(tMileage);
-		tTrafficSchema.setColor(tColor);
-		tTrafficSchema.setAttn(tAttn);
-		tTrafficSchema.setPhone(tPhone);
-		tTrafficSchema.setComcode(tComcode);
-		tTrafficSchema.setIndate(tInDate);
-		tTrafficSchema.setIntime(tIntime);
-		tTrafficSchema.setRemark(tRemark);
-		tTrafficSchema.setState("1"); //入库
-		tTrafficSchema.setUwflag("1");//入库待审核
-		
-		
-		if (checkerData()){
-			if ("INSERT".equals(tType)) {
-				msg = trafficService.inRecord(tTrafficSchema, tMissionSchema);
-			} else {
-				msg = trafficService.modifyRecord(tTrafficSchema, tMissionSchema);
-			}
-		}
 		if (msg == null) {
 		    msg = "保存成功！";
 		}
-		request.setAttribute("msg", msg);
+		String tFile = "in_" + tWF_SerialNo + ".pdf";
+		request.setAttribute("filename", tFile);
 		return new ModelAndView("msg");
     }
     

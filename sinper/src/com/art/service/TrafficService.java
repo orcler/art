@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import com.art.dao.HibernateUtil;
 import com.art.dao.IMissionDao;
 import com.art.dao.ITrafficDao;
+import com.art.pdf.InConfPirnt;
 import com.art.schema.MissionSchema;
 import com.art.schema.TrafficSchema;
 
@@ -104,6 +105,21 @@ public class TrafficService {
 	    session.close();
 	}
 	return null;
+    }
+    
+    public String printPdf(MissionSchema aMissionSchema) {
+    	session = HibernateUtil.getSession();
+    	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000003");
+    	TrafficSchema tTrafficSchema = new TrafficSchema();
+    	tTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+    	tTrafficSchema = trafficDao.query(session, tTrafficSchema);
+    	session.close();
+    	try {
+			boolean tIsCreated = new InConfPirnt().printPdf(tTrafficSchema);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return null;
     }
     
     public ITrafficDao getTrafficDao() {
