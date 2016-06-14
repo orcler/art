@@ -26,7 +26,7 @@ public class CtrlDataQuery implements Controller {
 	if ("inRgster".equals(tType)) {
 	    tData = inRgster_json();
 	} else if ("inuw".equals(tType)) {
-	    tData = inuw_json();
+	    tData = inuw_json(request);
 	} else if ("inconf".equals(tType)) {
 	    tData = inconf_json(request);
 	}
@@ -84,15 +84,31 @@ public class CtrlDataQuery implements Controller {
 	return tData;
     }
 
-    public String inuw_json() throws Exception {
-	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-		+ " from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo ";
-	System.out.println(tSql);
+    public String inuw_json(HttpServletRequest request) throws Exception {
+    	String tStrtPage  = request.getParameter("page");
+    	String tStrRows = request.getParameter("rows");
+    	int tPage = Integer.valueOf(tStrtPage);
+    	int tRows = Integer.valueOf(tStrRows);
+    	int tIdx = (tPage - 1) * tRows;
+    	System.out.println(tRows + " : page : " + tPage);
+    	String tLimit = " limit " + tIdx + ", " + tRows;
+	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo ";// get total
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
 	Statement tStatement = tConn.createStatement();
 	ResultSet tResultSet = tStatement.executeQuery(tSql);
 	int tRowNums = 0;
+	while (tResultSet.next()) {
+		tRowNums = tResultSet.getInt(1);
+	}
+	tResultSet.close();
+	
+	tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
+			+ " from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo " + tLimit;
+	
+	System.out.println(tSql);
+
+	tResultSet = tStatement.executeQuery(tSql);
 	String tContext = ", \"rows\" : [ ";
 	while (tResultSet.next()) {
 	    String tSerialNo = tResultSet.getString("missionid");
@@ -119,7 +135,6 @@ public class CtrlDataQuery implements Controller {
 	    tContext += "\"remark\":\"" + tremark + "\",";
 	    tContext += "\"indate\":\"" + tindate + "\",";
 	    tContext += "\"operator\":\"" + tcreateoperator + "\"},";
-	    tRowNums++;
 	}
 	tContext = tContext.substring(0, tContext.length() - 1) + "]}";
 	tDataSource.closeConn(tConn, tStatement, tResultSet);
@@ -132,7 +147,9 @@ public class CtrlDataQuery implements Controller {
 	String tEnginNo = request.getParameter("enginno");
 	String tStartDate = request.getParameter("startdate");
 	String tEndDate = request.getParameter("enddate");
-	
+	String tRows = request.getParameter("rows");
+	String tPage  = request.getParameter("page");
+	System.out.println(tRows + " : page : " + tPage);
 	String tWhereSql = " ";
 	if (tComCode != null && !"".equals(tComCode)) {
 	    tWhereSql += " and b.comcode = '" + tComCode + "' ";

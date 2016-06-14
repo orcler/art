@@ -1,5 +1,7 @@
 package com.art.service;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -114,7 +116,7 @@ public class TrafficService {
 	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
 	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
 	if (null == tTrafficSchema.getInfo1() || "".equals(tTrafficSchema.getInfo1())) {
-	    return "还未打印凭证，不能核销！";
+	    return "还未打印凭证，不能确认！";
 	}
 	tTrafficSchema.setUwflag("0");
 	tMissionSchema.setActivityid("1000000004");
@@ -137,6 +139,26 @@ public class TrafficService {
 	return null;
     }
     
+    public String inbatchRecord(List<TrafficSchema> trafficList, List<MissionSchema> missionList) {
+	session = HibernateUtil.getSession();
+	Transaction tTransaction = session.beginTransaction();
+	try {
+		for (TrafficSchema schema : trafficList) {
+			trafficDao.save(session, schema);
+		}
+		for (MissionSchema schema : missionList) {
+			missionDao.save(session, schema);
+		}
+	    tTransaction.commit();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "批量入库失败：" + e.toString();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
     
     public String printPdf(MissionSchema aMissionSchema, String tPath) {
     	session = HibernateUtil.getSession();

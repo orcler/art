@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <form id="inuw_form" method="post">
-	<table class="easyui-datagrid" title="入库待审核列表" id="inuw_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inuw',method:'get',singleSelect:true,fitColumns:true">
+	<table class="easyui-datagrid" title="入库待审核列表" id="inuw_dg" data-options="url:'./dataquery.form?qtype=inuw',method:'get',singleSelect:true,fitColumns:true,autoRowHeight:false,pagination:true,rownumbers:true,pageSize:10">
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
@@ -76,4 +76,5 @@ $(document).ready(function() {
 		}
 	})
 });
+
 </script>

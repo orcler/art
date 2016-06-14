@@ -25,11 +25,11 @@ public class ParseExcel {
 		String file = "data.xls";
 		HSSFWorkbook book = new HSSFWorkbook(new FileInputStream(file));
 		HSSFSheet sheet = book.getSheetAt(0);
-		String[] files = new String[sheet.getLastRowNum()]; //Éú³ÉpdfÎÄ¼þÂ·¾¶
+		String[] files = new String[sheet.getLastRowNum()];
 		String outDir = "data" ;
-		DateFormat df = new SimpleDateFormat("yyyy Äê MM ÔÂ");
+		DateFormat df = new SimpleDateFormat("yyyy ï¿½ï¿½ MM ï¿½ï¿½");
 		String sysdate = df.format(new Date());
-		sysdate = "2016 Äê 5 ÔÂ";
+		sysdate = "2016 ï¿½ï¿½ 5 ï¿½ï¿½";
 		File dir = new File(outDir);
 		if (!dir.exists())
 			dir.mkdirs();
@@ -38,13 +38,13 @@ public class ParseExcel {
 			Row row = sheet.getRow(i);
 			PrintData data = new PrintData();	
 			int cell2 = (int) row.getCell(2).getNumericCellValue();
-			String sex =cell2 == 0 ? "ÏÈÉú" : "Å®Ê¿";
+			String sex =cell2 == 0 ? "ï¿½ï¿½ï¿½ï¿½" : "Å®Ê¿";
 			String outFile = outDir + File.separator + row.getCell(3).getStringCellValue() + ".pdf";
 			files[i-1] = outFile;
 			String tType = row.getCell(0).getStringCellValue().toUpperCase().trim();
 			String tTemplete = "templete/" + tType + cell2 +".pdf";
 			data.type= tType;
-			String receive = row.getCell(1).getStringCellValue() + " " + sex + "£¨ÊÕ£©";
+			String receive = row.getCell(1).getStringCellValue() + " " + sex + "ï¿½ï¿½ï¿½Õ£ï¿½";
 			System.out.println(receive);
 			int tValueType = row.getCell(4).getCellType();
 			System.out.println(tValueType);
@@ -57,15 +57,15 @@ public class ParseExcel {
 			data.setAddress(row.getCell(5).getStringCellValue());
 			if (row.getLastCellNum()>5 && row.getCell(6) != null) {
 				data.setAddress1(row.getCell(6).getStringCellValue());
-				data.setReceive("ÓÊ±à£º" + tZipCode, 1);
+				data.setReceive("ï¿½Ê±à£º" + tZipCode, 1);
 			} else {
-				data.setReceive("ÓÊ±à£º" + tZipCode, 0);
+				data.setReceive("ï¿½Ê±à£º" + tZipCode, 0);
 			}
-			data.setAgentName("µÂ»ª°²¹ËÈËÊÙ×ð¹ó¿Í»§½¡¿µÌå¼ìÑûÇëº¯");
+			data.setAgentName("ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ëº¯");
 			data.setCustomer(row.getCell(1).getStringCellValue());
 			data.setIdno(row.getCell(3).getStringCellValue());
 			//data.setSysdate(sysdate);
-			//Éú³Épdf
+			//ï¿½ï¿½ï¿½pdf
 			editor.create(data.datas, outFile, tTemplete);
 		}
 		String newfile = outDir+File.separator+"print.pdf";
