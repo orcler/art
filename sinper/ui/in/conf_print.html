@@ -1,0 +1,23 @@
+<table class="easyui-datagrid" style="height:160px" data-options="rownumbers:true,singleSelect:true,url:'./in/datagrid_data1.json',method:'get',singleSelect:true,fit:true,fitColumns:true,pagination:true,toolbar:'#ocpsearch'">
+	<thead>
+		<tr>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th data-options="field:'itemid'" width="80">发动机编码</th>
+			<th data-options="field:'productid'" width="50">车型</th>
+			<th data-options="field:'productname'" width="50">价值</th>
+			<th data-options="field:'listprice',align:'right'" width="80">行驶里程（km）</th>
+			<th data-options="field:'unitcost'" width="80">颜色</th>
+			<th data-options="field:'attr1'" width="150">联系人</th>
+			<th data-options="field:'status',align:'center'" width="50">入机经销商</th>
+		</tr>
+	</thead>
+</table>
+<div id="ocpsearch" style="padding:2px 5px;">
+		经销商：<input class="easyui-textbox" style="width:110px">
+		发动机编码：<input class="easyui-textbox" style="width:110px">
+		起始日期: <input class="easyui-datebox" style="width:110px">
+		终止日期: <input class="easyui-datebox" style="width:110px">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">打印凭证</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">入库确认</a>
+</div>
