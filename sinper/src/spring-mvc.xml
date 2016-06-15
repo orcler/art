@@ -30,6 +30,10 @@
 	<bean id="CtrlInConfDeal" class="com.art.ctrl.CtrlInConfDeal"  autowire="byType"  />
 	<bean id="CtrlInConfPrint" class="com.art.ctrl.CtrlInConfPrint"  autowire="byType"  />
 	<bean id="CtrlUpload" class="com.art.ctrl.CtrlUpload"  autowire="byType"  />
+	<bean id="CtrlOutDataQuery" class="com.art.ctrl.CtrlOutDataQuery"  autowire="byType"  />
+	<bean id="CtrlOutManager" class="com.art.ctrl.CtrlOutManager"  autowire="byType"  /> 
+	<bean id="CtrlOutUw" class="com.art.ctrl.CtrlOutUw"  autowire="byType"  /> 
+		
 	<bean id="handerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
 		<property name="mappings"  ref="urlMappings" />
 	</bean>
@@ -39,9 +43,13 @@
 		<prop key="codequery.form">CtrlCodeQuery</prop>
 		<prop key="dataquery.form">CtrlDataQuery</prop>
 		<prop key="inuw.form">CtrlInUw</prop>
+		<prop key="inuw.form">CtrlInUw</prop>
 		<prop key="print.form">CtrlInConfPrint</prop>
 		<prop key="inconf.form">CtrlInConfDeal</prop>
 		<prop key="upload.form">CtrlUpload</prop>
+		<prop key="outRegster.form">CtrlOutManager</prop>
+		<prop key="outdataquery.form">CtrlOutDataQuery</prop>
+		<prop key="outuw.form">CtrlOutUw</prop>
 	</util:properties>
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
 		<property name="prefix"  value="/" />

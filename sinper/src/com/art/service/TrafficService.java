@@ -182,6 +182,79 @@ public class TrafficService {
     	return null;
     }
     
+    
+    public String outRecord(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+  	session = HibernateUtil.getSession();
+  	//获取出库车俩信息
+  	TrafficSchema tOutTrafficSchema = new TrafficSchema(); 
+  	tOutTrafficSchema.setSerialNo(aMissionSchema.getMissionprop2());
+  	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
+  	tOutTrafficSchema.setState("2");//出库
+  	tOutTrafficSchema.setOutdate(aTrafficSchema.getIndate());
+  	tOutTrafficSchema.setOuttime(aTrafficSchema.getIntime());
+  	if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
+  	    return "入库车俩价值不能小于出库车俩价值";
+  	}
+  	
+  	Transaction tTransaction = session.beginTransaction();
+  	try {
+  	    trafficDao.update(session, tOutTrafficSchema);
+  	    trafficDao.save(session, aTrafficSchema);
+  	    missionDao.save(session, aMissionSchema);
+  	    tTransaction.commit();
+  	} catch (Exception e) {
+  	    tTransaction.rollback();
+  	    e.printStackTrace();
+  	    return "入库失败，发动机号：" + aTrafficSchema.getEngineNo();
+  	} finally {
+  	    session.close();
+  	}
+  	return null;
+      }
+    
+    
+    public String outuw(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "2000000002");
+	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop2());
+	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	tTrafficSchema.setUwflag(aTrafficSchema.getUwflag());
+	tTrafficSchema.setRemark(aTrafficSchema.getRemark());
+	
+	String tUwFlag = aTrafficSchema.getUwflag();
+	String tActivityId = "2000000003";//默认审核通
+	String tSubMissionid = tMissionSchema.getSubmissionid();
+	if ("1".equals(tUwFlag)) {
+		tActivityId = "2000000003";
+	} else if ("2".equals(tUwFlag)) {//回退
+		tActivityId = "2000000001";
+		int tIdx = Integer.valueOf(tSubMissionid) + 1;
+		tSubMissionid = String.valueOf(tIdx);
+		
+	} else {
+		tActivityId = "1000000000";
+	}
+	tMissionSchema.setActivityid(tActivityId);
+	tMissionSchema.setSubmissionid(tSubMissionid);
+	tMissionSchema.setModifydate(aMissionSchema.getModifydate());
+	tMissionSchema.setModifytime(aMissionSchema.getModifytime());
+	session.clear();
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    trafficDao.update(session, tTrafficSchema);
+	    missionDao.update(session, tMissionSchema);
+	    tTransaction.commit();
+	    session.flush();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库失败，发动机号：" + aTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
     public ITrafficDao getTrafficDao() {
 	return trafficDao;
     }

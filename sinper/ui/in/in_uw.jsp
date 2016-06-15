@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
-			<th data-options="field:'SerialNo'" width="80">流水号</th>
+			<th data-options="field:'SerialNo'" width="150">流水号</th>
 			<th data-options="field:'EngineNo'" width="80">发动机编码</th>
 			<th data-options="field:'VIN'" width="80">机架编码</th>
 			<th data-options="field:'model'" width="80">车型</th>

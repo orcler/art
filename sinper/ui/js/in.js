@@ -59,12 +59,12 @@ function ir_submit() {
 			success : function(data) {
 				$.messager.alert('入库登记',data);
 				initRgsterGrid();
+				$('#fm_in_save').clearForm();
 			}
 		}
 		$('#fm_in_save').ajaxSubmit(options);
 	});
 	
-	$('#fm_in_save').clearForm();
 }
 
 function initRgsterGrid() {
