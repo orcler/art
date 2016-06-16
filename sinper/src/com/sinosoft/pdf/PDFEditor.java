@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import art.wei.util.Config;
 import art.wei.util.PDFSchema;
 
 import com.itextpdf.text.BaseColor;
@@ -18,7 +17,6 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 /**
- * pdf编辑器
  * @author wei jian
  *
  */
@@ -36,17 +34,16 @@ public class PDFEditor {
 		reader = new PdfReader(aTemplete);
 		stamp = new PdfStamper(reader, new FileOutputStream(mOutFile));
 		int n = reader.getNumberOfPages();
-		for (int i = 1; i <= n; i++) { //循环每一页
+		for (int i = 1; i <= n; i++) { //循锟斤拷每一页
 			PdfContentByte Content =  stamp.getOverContent(i);
 			for (PDFSchema schema : mPdfList) {
-				if (i == schema.getPage()) {//如果要写入本页
-					// 用来设置文字的位置和字体
+				if (i == schema.getPage()) { 
 					Content.beginText();
 					Content.setColorFill(new BaseColor(0, 0, 0));
-					Content.setFontAndSize(schema.getFont(), schema.getFontSize()); //字体
-					int tCoor[] = schema.getCoordinate();//坐标
+					Content.setFontAndSize(schema.getFont(), schema.getFontSize());
+					int tCoor[] = schema.getCoordinate();
 					Content.setTextMatrix(tCoor[0], tCoor[1]); 
-					Content.showText(schema.getText());//文本
+					Content.showText(schema.getText());
 					Content.endText();
 				}
 			}
@@ -62,7 +59,7 @@ public class PDFEditor {
        try {   
     	   PdfReader reader1 = new PdfReader(files[0]);
            document = new Document(reader1.getPageSize(1));   
-           reader1.close();//一定要关闭，不然无法删除对应的文件
+           reader1.close();
            PdfCopy copy = new PdfCopy(document, new FileOutputStream(newfile));   
            document.open();   
            for (int i = 0; i < files.length; i++) {   

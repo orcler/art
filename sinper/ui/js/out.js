@@ -47,15 +47,24 @@ function outrg_search() {
 }
 
 function out_regster_submit() {
-	var tEngineNo = $('#orEngineNo').val();
-	var tVIN = $('#orVIN').val();
-	if (tEngineNo== null || tEngineNo == '') {
-		$.messager.alert("发动机编码不允许为空");
-		return;
-	}else	if (tVIN== null || tVIN == '') {
-		$.messager.alert("机架号不允许为空");
-		return;
-	} 
+	if($('#or_paymode').is(':checked')) {
+		var orMoney = $('#orMoney').val();
+		if (orMoney == null || ''==orMoney) {
+			$.messager.alert('出库登记','付款金额不允许为空');
+			return;
+		}
+	} else {
+		var tEngineNo = $('#orEngineNo').val();
+		var tVIN = $('#orVIN').val();
+		if (tEngineNo== null || tEngineNo == '') {
+			$.messager.alert('出库登记','发动机编码不允许为空');
+			return;
+		}else	if (tVIN== null || tVIN == '') {
+			$.messager.alert('出库登记','机架号不允许为空');
+			return;
+		} 
+	}
+	
 	$(document).ready(function() {
 		var options = {
 			url : 'outRegster.form',
@@ -78,6 +87,17 @@ function initOutRegsterGrid() {
 	})
 }
  
+function payMode(chbox) {
+	if($(chbox).is(':checked')) {
+		$("#or_paymoney" ).css("display", "block");
+		$("#or_paycar" ).css("display", "none"); 
+	} else {
+		$("#or_paymoney" ).css("display", "none");
+		$("#or_paycar" ).css("display", "block"); 
+	}
+}
+
+//出库审核相关开始--------------------------------------------------------------
 function ou_submit() {
 	$(document).ready(function() {
 		var options = {
@@ -100,3 +120,4 @@ function initOutUwGrid() {
 	    });   
 	})
 }
+//出库审核相关结束--------------------------------------------------------------

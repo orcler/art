@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -90,7 +89,7 @@ public class CtrlOutDataQuery implements Controller {
 	String tEnginNo = request.getParameter("enginno");
 	String tStartDate = request.getParameter("startdate");
 	String tEndDate = request.getParameter("enddate");
-	String tWhereSql = " and '201' = " + userId;
+	String tWhereSql = " and '101' = " + userId;
 	if (tComCode != null && !"".equals(tComCode)) {
 	    tWhereSql += " and b.comcode = '" + tComCode + "' ";
 	}
@@ -187,9 +186,11 @@ public class CtrlOutDataQuery implements Controller {
 	}
 	tResultSet.close();
 	
-	tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark,"
-		+ " c.EngineNo oEngineNo, c.VIN oVIN, c.model omodel, c.cost ocost, c.mileage omileage, c.color ocolor "
-		+ " from MISSION a,TRAFFIC b, TRAFFIC c  where a.activityid='2000000002' and a.missionprop1=b.SerialNo and a.missionprop2 = c.SerialNo and '202'= " + userId + tLimit;
+	tSql = "select t.*,c.EngineNo as iEngineNo,c.VIN as iVIN, c.model as iModel, c.cost as iCost, c.mileage as iMileage, c.color as iColor, c.attn as iAttn, c.remark as iRemark from "
+		+ " (select a.missionid,a.missionprop1 as inserialno,b.info3 as pay,b.EngineNo as oEngineNo, b.VIN as oVIN, b.model as oModel,b.cost as oCost, b.mileage as oMileage,b.color as oColor,b.attn as oAttn, "
+		+ "  b.comcode as oComcode, (SELECT x.codename FROM icode x WHERE x.codetype = 'comcode' AND x.`code` = b.comcode) AS oComname, b.outdate as outdate, a.createoperator as iOperator "
+		+ "  from MISSION a, TRAFFIC b where a.missionprop2=b.SerialNo and a.activityid = '2000000002' and '102'= "+ userId + ") t LEFT JOIN TRAFFIC c on t.inserialno=c.serialno "
+		+ tLimit;
 	
 	System.out.println(tSql);
 
@@ -197,41 +198,58 @@ public class CtrlOutDataQuery implements Controller {
 	String tContext = ", \"rows\" : [ ";
 	while (tResultSet.next()) {
 	    String tSerialNo = tResultSet.getString("missionid");
-	    String tEngineNo = tResultSet.getString("EngineNo");
+	    String tPay = tResultSet.getString("pay");
+	    
 	    String tOEngineNo = tResultSet.getString("oEngineNo");
-	    String tVIN = tResultSet.getString("VIN");
+	    String tIEngineNo = tResultSet.getString("iEngineNo");
+	    
 	    String tOVIN = tResultSet.getString("oVIN");
-	    String tmodel = tResultSet.getString("model");
-	    String tOmodel = tResultSet.getString("omodel");
-	    double tcost = tResultSet.getDouble("cost");
-	    double tOcost = tResultSet.getDouble("ocost");
-	    double tmileage = tResultSet.getDouble("mileage");
-	    double tOmileage = tResultSet.getDouble("omileage");
-	    String tcolor = tResultSet.getString("color");
-	    String tOcolor = tResultSet.getString("ocolor");
-	    String tattn = tResultSet.getString("attn");
-	    String tcomname = tResultSet.getString("comname");
-	    String tindate = tResultSet.getString("indate");
-	    String tremark = tResultSet.getString("remark");
-	    String tcreateoperator = tResultSet.getString("createoperator");
+	    String tIVIN = tResultSet.getString("iVIN");
+	    
+	    String tOModel = tResultSet.getString("oModel");
+	    String tIModel = tResultSet.getString("iModel");
+	    
+	    double tOCost = tResultSet.getDouble("oCost");
+	    double tICost = tResultSet.getDouble("iCost");
+	    
+	    double tOMileage = tResultSet.getDouble("oMileage");
+	    double tIMileage = tResultSet.getDouble("iMileage");
+	    
+	    String tOColor = tResultSet.getString("oColor");
+	    String tIColor = tResultSet.getString("iColor");
+	    
+	    String tOAttn = tResultSet.getString("oAttn");
+	    String tIAttn = tResultSet.getString("iAttn");
+	    
+	    String tOComcode = tResultSet.getString("oComcode");
+	    String tOComname = tResultSet.getString("oComname");
+	    String tOutDate = tResultSet.getString("outdate");
+	    String tIRemark = tResultSet.getString("iRemark");
+	    String tIOperator = tResultSet.getString("iOperator");
+	    
+	    tIRemark = tIRemark == null ? "" : tIRemark;
+	    
 	    tContext += "{ \"SerialNo\":\"" + tSerialNo + "\",";
-	    tContext += "\"EngineNo\":\"" + tEngineNo + "\",";
 	    tContext += "\"oEngineNo\":\"" + tOEngineNo + "\",";
-	    tContext += "\"VIN\":\"" + tVIN + "\",";
+	    tContext += "\"iEngineNo\":\"" + tIEngineNo + "\",";
 	    tContext += "\"oVIN\":\"" + tOVIN + "\",";
-	    tContext += "\"model\":\"" + tmodel + "\",";
-	    tContext += "\"omodel\":\"" + tOmodel + "\",";
-	    tContext += "\"cost\":\"" + tcost + "\",";
-	    tContext += "\"ocost\":\"" + tOcost + "\",";
-	    tContext += "\"mileage\":\"" + tmileage + "\",";
-	    tContext += "\"omileage\":\"" + tOmileage + "\",";
-	    tContext += "\"color\":\"" + tcolor + "\",";
-	    tContext += "\"ocolor\":\"" + tOcolor + "\",";
-	    tContext += "\"attn\":\"" + tattn + "\",";
-	    tContext += "\"comname\":\"" + tcomname + "\",";
-	    tContext += "\"remark\":\"" + tremark + "\",";
-	    tContext += "\"indate\":\"" + tindate + "\",";
-	    tContext += "\"operator\":\"" + tcreateoperator + "\"},";
+	    tContext += "\"iVIN\":\"" + tIVIN + "\",";
+	    tContext += "\"oModel\":\"" + tOModel + "\",";
+	    tContext += "\"iModel\":\"" + tIModel + "\",";
+	    tContext += "\"oCost\":\"" + tOCost + "\",";
+	    tContext += "\"iCost\":\"" + tICost + "\",";
+	    tContext += "\"oMileage\":\"" + tOMileage + "\",";
+	    tContext += "\"iMileage\":\"" + tIMileage + "\",";
+	    tContext += "\"oColor\":\"" + tOColor + "\",";
+	    tContext += "\"iColor\":\"" + tIColor + "\",";
+	    tContext += "\"oAttn\":\"" + tOAttn + "\",";
+	    tContext += "\"iAttn\":\"" + tIAttn + "\",";
+	    tContext += "\"comcode\":\"" + tOComcode + "\",";
+	    tContext += "\"comname\":\"" + tOComname + "\",";
+	    tContext += "\"remark\":\"" + tIRemark + "\",";
+	    tContext += "\"opdate\":\"" + tOutDate + "\",";
+	    tContext += "\"pay\":\"" + tPay + "\",";
+	    tContext += "\"operator\":\"" + tIOperator + "\"},";
 	}
 	tContext = tContext.substring(0, tContext.length() - 1) + "]}";
 	tDataSource.closeConn(tConn, tStatement, tResultSet);

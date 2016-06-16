@@ -32,49 +32,56 @@
 		<a href="javascript:outrg_search()" class="easyui-linkbutton"  id="outrg_search" name="outrg_search"  iconCls="icon-search">搜索</a>
 </div>
 	<div><h2>入库机型信息</h2></div>
-	<table cellpadding="5">
-		<tr>
-			<td>发动机编码</td>
-			<td><input class="easyui-textbox" type="text" id="orEngineNo"  name="orEngineNo" data-options="required:true"></td>
-			<td>机架号</td>
-			<td><input class="easyui-textbox" type="text" id="orVIN"  name="orVIN" data-options="required:true"></td>
-		</tr>
-		<tr>
-			<td>车型</td>
-			<td><input class="easyui-textbox" type="text" id="orModel"  name="orModel"  ></input></td>
-			<td>合格证号</td>
-			<td><input class="easyui-textbox" type="text"  id="orCert"  name="orCert" ></input></td>
-		</tr>
-		<tr>
-			<td>价值</td>
-			<td><input class="easyui-textbox" type="text"  id="orCost" name="orCost" ></input>万</td>
-			<td>行驶里程</td>
-			<td><input class="easyui-textbox" type="text"  id="orMileage" name="orMileage" data-options="required:false">KM</input></td>
-		</tr>
-		<tr>
-			<td>颜色</td>
-			<td><input class="easyui-textbox" type="text" id="orColor"  name="orColor" data-options="required:false"></input></td>
-			<td>联系人</td>
-			<td><input class="easyui-textbox" type="text"  id="orAttn"  name="orAttn" data-options="required:false"></input></td>
-		</tr>
-		<tr>
-			<td>联系电话</td>
-			<td><input class="easyui-textbox" type="text"  id="orPhone"  name="orPhone" data-options="required:false"></input></td>
-			<td>车源</td>
-			<td><select class="easyui-combobox"  id="orComcode"	name="orComcode" style="width:145px;" data-options="	alueField:'id',textField:'text',panelHeight:'auto'">
-			</select></td>
-		</tr>
-		<tr>
-			<td>备注</td>
-			<td colspan='3'><input class="easyui-textbox" id="orRemark"  name="orRemark"  data-options="multiline:true" style="width:360px;height:60px"></input></td>
-		</tr>
-	</table>
+	<span style="margin-left:10px"></span>付款: <input type="checkbox" id="or_paymode"  name="or_paymode" onchange="payMode(this)" />
+	<div id="or_paymoney" style="display:none">
+		<span style="margin-left:10px">交付金额：<input class="easyui-textbox"  type="text" id="orMoney"  name="orMoney" readonly="readonly" style="width:130px">&nbsp;万</span>
+	</div>
+	<div id="or_paycar" >
+		<table cellpadding="5">
+			<tr>
+				<td>发动机编码</td>
+				<td><input class="easyui-textbox" type="text" id="orEngineNo"  name="orEngineNo" data-options="required:true"></td>
+				<td>机架号</td>
+				<td><input class="easyui-textbox" type="text" id="orVIN"  name="orVIN" data-options="required:true"></td>
+			</tr>
+			<tr>
+				<td>车型</td>
+				<td><input class="easyui-textbox" type="text" id="orModel"  name="orModel"  ></input></td>
+				<td>合格证号</td>
+				<td><input class="easyui-textbox" type="text"  id="orCert"  name="orCert" ></input></td>
+			</tr>
+			<tr>
+				<td>价值</td>
+				<td><input class="easyui-textbox" type="text"  id="orCost" name="orCost" ></input>万</td>
+				<td>行驶里程</td>
+				<td><input class="easyui-textbox" type="text"  id="orMileage" name="orMileage" data-options="required:false" />KM</td>
+			</tr>
+			<tr>
+				<td>颜色</td>
+				<td><input class="easyui-textbox" type="text" id="orColor"  name="orColor" data-options="required:false"></input></td>
+				<td>联系人</td>
+				<td><input class="easyui-textbox" type="text"  id="orAttn"  name="orAttn" data-options="required:false"></input></td>
+			</tr>
+			<tr>
+				<td>联系电话</td>
+				<td><input class="easyui-textbox" type="text"  id="orPhone"  name="orPhone" data-options="required:false"></input></td>
+				<td>车源</td>
+				<td><select class="easyui-combobox"  id="orComcode"	name="orComcode" style="width:145px;" data-options="	alueField:'id',textField:'text',panelHeight:'auto'">
+				</select></td>
+			</tr>
+			<tr>
+				<td>备注</td>
+				<td colspan='3'><input class="easyui-textbox" id="orRemark"  name="orRemark"  data-options="multiline:true" style="width:360px;height:60px"></input></td>
+			</tr>
+		</table>
+	</div>
+	
 	<div style="text-align:left;padding:5px">
-		<span style="margin-left:180px"/><a href="javascript:out_regster_submit()" class="easyui-linkbutton" >保存</a>
+		<span style="margin-left:180px"></span><a href="javascript:out_regster_submit()" class="easyui-linkbutton" >保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
 	</div>
-	<input  type="textbox"  id="ir_wfserialno" name="ir_wfserialno"  hidden="hidden">
-	<input  type="textbox"  id="out_tfserialno" name="out_tfserialno"  hidden="hidden">
+	<input  type="text"  id="ir_wfserialno" name="ir_wfserialno"  hidden="hidden">
+	<input  type="text"  id="out_tfserialno" name="out_tfserialno"  hidden="hidden">
 </form>
 <script>
 $(document).ready(function() {
@@ -82,10 +89,12 @@ $(document).ready(function() {
 		onClickRow: function () {
 			var row = $('#outrg_dg').datagrid('getSelected');
 			if (row){
+				$('#orMoney').textbox('setValue',row.cost);//付款
 				$('#ir_wfserialno').val(row.SerialNo);
 				$('#out_tfserialno').val(row.outSerialNo);
 				$('#orComcode').combobox("setValue", row.comcode);
 				$('#orComcode').combobox("setText", row.comname);
+				
 /* 				$('#EngineNo').textbox("setValue", row.EngineNo);
 				$('#VIN').textbox("setValue", row.VIN);
 				$('#model').textbox("setValue", row.model);

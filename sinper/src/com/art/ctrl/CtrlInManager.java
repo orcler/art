@@ -67,8 +67,6 @@ public class CtrlInManager implements Controller {
 		String tComcode = request.getParameter("comcode");
 		Date tInDate =tCurDate;
 		String tIntime  = tCurTime;
-		Date tOutdate = tCurDate;
-		String tOuttime = tCurTime;
 		String tRemark  = request.getParameter("remark");
 		System.out.println("----" + tAttn);
 		if (tEngineNo == null || tEngineNo == null)

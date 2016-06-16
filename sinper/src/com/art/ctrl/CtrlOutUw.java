@@ -26,9 +26,9 @@ public class CtrlOutUw implements Controller {
 		Date tCurDate = PubFun.getCurSqlDate();
 		String tCurTime = PubFun.getCurTime();
 		
-		String  tSerialNo = request.getParameter("outuw_serialno");
-		String tUwFlag = request.getParameter("outuw_uwstate");
-		String tRemark  = request.getParameter("outuw_remark");
+		String  tSerialNo = request.getParameter("ou_serialno");
+		String tUwFlag = request.getParameter("ou_uwstate");
+		String tRemark  = request.getParameter("ou_remark");
  
 		//入库信息
 		TrafficSchema tTrafficSchema = new TrafficSchema();

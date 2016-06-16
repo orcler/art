@@ -183,23 +183,25 @@ public class TrafficService {
     }
     
     
-    public String outRecord(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+    public String outRecord(boolean isPay, TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
   	session = HibernateUtil.getSession();
   	//获取出库车俩信息
   	TrafficSchema tOutTrafficSchema = new TrafficSchema(); 
   	tOutTrafficSchema.setSerialNo(aMissionSchema.getMissionprop2());
   	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
   	tOutTrafficSchema.setState("2");//出库
+  	tOutTrafficSchema.setInfo3("pay");
   	tOutTrafficSchema.setOutdate(aTrafficSchema.getIndate());
   	tOutTrafficSchema.setOuttime(aTrafficSchema.getIntime());
-  	if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
-  	    return "入库车俩价值不能小于出库车俩价值";
+  	if  (!isPay) {
+  	  trafficDao.save(session, aTrafficSchema);
+    	if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
+    	    return "入库车俩价值不能小于出库车俩价值";
+    	}
   	}
-  	
   	Transaction tTransaction = session.beginTransaction();
   	try {
   	    trafficDao.update(session, tOutTrafficSchema);
-  	    trafficDao.save(session, aTrafficSchema);
   	    missionDao.save(session, aMissionSchema);
   	    tTransaction.commit();
   	} catch (Exception e) {
