@@ -93,7 +93,6 @@ $(document).ready(function() {
 				$('#ouoModel').textbox("setValue", row.oModel);
 				$('#ouoCost').textbox("setValue", row.oCost);
 				$('#ouoMileage').textbox("setValue", row.oMileage);
-				alert(row.pay);
 				if ('pay'==row.pay) {
 					$('#ou_pay').textbox("setValue", row.oCost);
 				}else {
