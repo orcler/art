@@ -187,7 +187,7 @@ public class CtrlOutDataQuery implements Controller {
 	tResultSet.close();
 	
 	tSql = "select t.*,c.EngineNo as iEngineNo,c.VIN as iVIN, c.model as iModel, c.cost as iCost, c.mileage as iMileage, c.color as iColor, c.attn as iAttn, c.remark as iRemark from "
-		+ " (select a.missionid,a.missionprop1 as inserialno,b.info3 as pay,b.EngineNo as oEngineNo, b.VIN as oVIN, b.model as oModel,b.cost as oCost, b.mileage as oMileage,b.color as oColor,b.attn as oAttn, "
+		+ " (select a.missionid,a.missionprop1 as inserialno,b.paymode as pay,b.EngineNo as oEngineNo, b.VIN as oVIN, b.model as oModel,b.cost as oCost, b.mileage as oMileage,b.color as oColor,b.attn as oAttn, "
 		+ "  b.comcode as oComcode, (SELECT x.codename FROM icode x WHERE x.codetype = 'comcode' AND x.`code` = b.comcode) AS oComname, b.outdate as outdate, a.createoperator as iOperator "
 		+ "  from MISSION a, TRAFFIC b where a.missionprop2=b.SerialNo and a.activityid = '2000000002' and '102'= "+ userId + ") t LEFT JOIN TRAFFIC c on t.inserialno=c.serialno "
 		+ tLimit;

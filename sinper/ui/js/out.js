@@ -27,7 +27,7 @@ function confOutPrint()
 	if (isExists){
 		$('#DivTab').tabs('select','出入库及打印凭证');
 	} else{
-		$('#DivTab').tabs('add',{title: '出入库及打印凭证', href: './out/conf_print.html', closable: true});
+		$('#DivTab').tabs('add',{title: '出入库及打印凭证', href: './out/outConfPrint.jsp', closable: true});
 	}
 }
 

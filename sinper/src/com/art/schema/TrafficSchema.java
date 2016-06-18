@@ -9,6 +9,7 @@ public class TrafficSchema {
     private String EngineNo;
     private String VIN;
     private String state;
+    private String paymode;
     private String uwflag;
     private String model;
     private Double cost;
@@ -169,6 +170,20 @@ public class TrafficSchema {
     }
     public void setInfo3(String info3) {
         this.info3 = info3;
+    }
+
+    /**
+     * @return the paymode
+     */
+    public String getPaymode() {
+	return paymode;
+    }
+
+    /**
+     * @param paymode the paymode to set
+     */
+    public void setPaymode(String paymode) {
+	this.paymode = paymode;
     }
 
 }

@@ -9,6 +9,7 @@
 		<property name="EngineNo"	type="java.lang.String" 	column="EngineNo" />
 		<property name="VIN"			type="java.lang.String" 	column="VIN" />
 		<property name="state"			type="java.lang.String" 	column="state" />
+		<property name="paymode"			type="java.lang.String" 	column="paymode" />
 		<property name="uwflag"		type="java.lang.String" 	column="uwflag" />
 		<property name="model"		type="java.lang.String" 	column="model" />
 		<property name="cost"			type="java.lang.Double" column="cost"  />

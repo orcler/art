@@ -93,9 +93,15 @@ $(document).ready(function() {
 				$('#ouoModel').textbox("setValue", row.oModel);
 				$('#ouoCost').textbox("setValue", row.oCost);
 				$('#ouoMileage').textbox("setValue", row.oMileage);
-				if ('pay'==row.pay) {
+				if ('1'==row.pay) {
 					$('#ou_pay').textbox("setValue", row.oCost);
+					$('#ouiEngineNo').textbox("setValue", '');
+					$('#ouiVIN').textbox("setValue", '');
+					$('#ouiModel').textbox("setValue", '');
+					$('#ouiCost').textbox("setValue", '');
+					$('#ouiMileage').textbox("setValue", '');
 				}else {
+					$('#ou_pay').textbox("setValue", '');
 					$('#ouiEngineNo').textbox("setValue", row.iEngineNo);
 					$('#ouiVIN').textbox("setValue", row.iVIN);
 					$('#ouiModel').textbox("setValue", row.iModel);

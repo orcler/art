@@ -190,9 +190,9 @@ public class TrafficService {
   	tOutTrafficSchema.setSerialNo(aMissionSchema.getMissionprop2());
   	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
   	tOutTrafficSchema.setState("2");//出库
-  	tOutTrafficSchema.setInfo3("pay");
-  	tOutTrafficSchema.setOutdate(aTrafficSchema.getIndate());
-  	tOutTrafficSchema.setOuttime(aTrafficSchema.getIntime());
+  	tOutTrafficSchema.setPaymode("1");
+  	tOutTrafficSchema.setOutdate(aMissionSchema.getOutdate());
+  	tOutTrafficSchema.setOuttime(aMissionSchema.getOuttime());
   	if  (!isPay) {
   	  trafficDao.save(session, aTrafficSchema);
     	if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
@@ -222,7 +222,13 @@ public class TrafficService {
 	TrafficSchema tTrafficSchema = trafficDao.query(session, aTrafficSchema);
 	tTrafficSchema.setUwflag(aTrafficSchema.getUwflag());
 	tTrafficSchema.setRemark(aTrafficSchema.getRemark());
-	
+	TrafficSchema tInTrafficSchema = new TrafficSchema();
+	if (!"1".equals(tTrafficSchema.getPaymode())) {//车俩入库
+	    tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	    tInTrafficSchema = trafficDao.query(session, tInTrafficSchema);
+	    tInTrafficSchema.setUwflag(aTrafficSchema.getUwflag());
+	    
+	}
 	String tUwFlag = aTrafficSchema.getUwflag();
 	String tActivityId = "2000000003";//默认审核通
 	String tSubMissionid = tMissionSchema.getSubmissionid();
@@ -234,7 +240,7 @@ public class TrafficService {
 		tSubMissionid = String.valueOf(tIdx);
 		
 	} else {
-		tActivityId = "1000000000";
+		tActivityId = "2000000000";
 	}
 	tMissionSchema.setActivityid(tActivityId);
 	tMissionSchema.setSubmissionid(tSubMissionid);
@@ -243,6 +249,9 @@ public class TrafficService {
 	session.clear();
 	Transaction tTransaction = session.beginTransaction();
 	try {
+	    if (!"1".equals(tTrafficSchema.getPaymode())) {
+		trafficDao.update(session, tInTrafficSchema);
+	    }
 	    trafficDao.update(session, tTrafficSchema);
 	    missionDao.update(session, tMissionSchema);
 	    tTransaction.commit();

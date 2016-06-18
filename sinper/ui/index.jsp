@@ -41,10 +41,11 @@ System.out.println("index - " + tPwd);
 					<a href="javascript:outUw()"><font size='3'>出库审核</font></a></br>
 					<a href="javascript:confOutPrint()"><font size='3'>打印凭证和出入库确认</font></a></br>
 				</div>
-				<div title="库存查询" data-options="selected:false" style="padding:10px;">
+				<div title="库存管理" data-options="selected:false" style="padding:10px;">
 					<a href="javascript:inQuery()"><font size='3'>入库查询</font></a></br>
 					<a href="javascript:outQuery()"><font size='3'>出库查询</font></a></br>
 					<a href="javascript:existsQuery()"><font size='3'>库存查询</font></a></br>
+					<a href="javascript:existsQuery()"><font size='3'>库存盘点</font></a></br>
 				</div>
 				<div title="系统管理" style="padding:10px">
 					<a href='javascript:addRole()'><font size='3'>权限管理</font></a></br>
