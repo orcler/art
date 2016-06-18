@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import art.wei.util.PDFSchema;
-
+import com.art.pdf.PDFSchema;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfContentByte;

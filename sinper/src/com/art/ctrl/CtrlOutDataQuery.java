@@ -27,8 +27,8 @@ public class CtrlOutDataQuery implements Controller {
 	    tData = outRegsterSearchJson(request);
 	} else if ("out_uw".equals(tType)) {
 	    tData = outUwjson(request);
-	} else if ("inconf".equals(tType)) {
-	    tData = inconf_json(request);
+	} else if ("outconf".equals(tType)) {
+	    tData = outconf_json(request);
 	}
 
 	request.setAttribute("json", tData);
@@ -122,7 +122,7 @@ public class CtrlOutDataQuery implements Controller {
 	}
 	tResultSet.close();
 	
-	tSql = " select a.missionid,b.SerialNo as outserialno, b.EngineNo, b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
+	tSql = " select a.missionid,b.SerialNo as outserialno, b.EngineNo b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
 		+ "b.phone, b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000004' and a.missionprop1=b.SerialNo  and b.state='1' " + tWhereSql + tLimit;
 	System.out.println(tSql);
 	tResultSet = tStatement.executeQuery(tSql);
@@ -175,7 +175,7 @@ public class CtrlOutDataQuery implements Controller {
     	int tIdx = (tPage - 1) * tRows;
     	System.out.println(tRows + " : page : " + tPage);
     	String tLimit = " limit " + tIdx + ", " + tRows;
-	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo ";// get total
+	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='2000000002' and a.missionprop1=b.SerialNo ";// get total
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
 	Statement tStatement = tConn.createStatement();
@@ -257,7 +257,7 @@ public class CtrlOutDataQuery implements Controller {
 	return tData;
     }
     
-    public String inconf_json(HttpServletRequest request) throws Exception {
+    public String outconf_json(HttpServletRequest request) throws Exception {
 	String tComCode = request.getParameter("comcode");
 	String tEnginNo = request.getParameter("enginno");
 	String tStartDate = request.getParameter("startdate");
@@ -265,7 +265,7 @@ public class CtrlOutDataQuery implements Controller {
 	String tRows = request.getParameter("rows");
 	String tPage  = request.getParameter("page");
 	System.out.println(tRows + " : page : " + tPage);
-	String tWhereSql = " ";
+	String tWhereSql = " and  '103' =  " + userId;
 	if (tComCode != null && !"".equals(tComCode)) {
 	    tWhereSql += " and b.comcode = '" + tComCode + "' ";
 	}
@@ -281,8 +281,8 @@ public class CtrlOutDataQuery implements Controller {
 	    tWhereSql += " and b.indate <= date('" + tEndDate + "') ";
 	}
 	
-	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-		+ " from MISSION a,TRAFFIC b  where a.activityid='1000000003' and a.missionprop1=b.SerialNo " + tWhereSql;
+	String tSql = " select a.missionid, b.EngineNo,b.paymode, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
+		+ " from MISSION a,TRAFFIC b  where a.activityid='2000000003' and a.missionprop2=b.SerialNo " + tWhereSql;
 	System.out.println(tSql);
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
@@ -293,6 +293,7 @@ public class CtrlOutDataQuery implements Controller {
 	while (tResultSet.next()) {
 	    String tSerialNo = tResultSet.getString("missionid");
 	    String tEngineNo = tResultSet.getString("EngineNo");
+	    String tPaymode = tResultSet.getString("paymode");
 	    String tVIN = tResultSet.getString("VIN");
 	    String tmodel = tResultSet.getString("model");
 	    double tcost = tResultSet.getDouble("cost");
@@ -305,6 +306,7 @@ public class CtrlOutDataQuery implements Controller {
 	    String tcreateoperator = tResultSet.getString("createoperator");
 	    tContext += "{ \"SerialNo\":\"" + tSerialNo + "\",";
 	    tContext += "\"EngineNo\":\"" + tEngineNo + "\",";
+	    tContext += "\"paymode\":\"" + tPaymode + "\",";
 	    tContext += "\"VIN\":\"" + tVIN + "\",";
 	    tContext += "\"model\":\"" + tmodel + "\",";
 	    tContext += "\"cost\":\"" + tcost + "\",";
@@ -322,4 +324,5 @@ public class CtrlOutDataQuery implements Controller {
 	String tData = "{\"total\":" + tRowNums + tContext;
 	return tData;
     }
+    
 }
