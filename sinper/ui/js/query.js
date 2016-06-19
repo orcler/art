@@ -3,11 +3,12 @@
 //出库清单
 function inQuery()
 {
+	alert('abc');
 	var isExists = $('#DivTab').tabs('exists','入库查询');
 	if (isExists){
 		$('#DivTab').tabs('select','入库查询');
 	} else{
-		$('#DivTab').tabs('add',{title: '入库查询', href: './query/in_query.html', closable: true});
+		$('#DivTab').tabs('add',{title: '入库查询', href: './query/inQuery.jsp', closable: true});
 	}
 }
 

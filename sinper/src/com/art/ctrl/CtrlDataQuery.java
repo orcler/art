@@ -207,4 +207,71 @@ public class CtrlDataQuery implements Controller {
 	String tData = "{\"total\":" + tRowNums + tContext;
 	return tData;
     }
+    
+    public String inquery_json(HttpServletRequest request) throws Exception {
+	String tComCode = request.getParameter("comcode");
+	String tEnginNo = request.getParameter("enginno");
+	String tStartDate = request.getParameter("startdate");
+	String tEndDate = request.getParameter("enddate");
+	String tRows = request.getParameter("rows");
+	String tPage  = request.getParameter("page");
+	System.out.println(tRows + " : page : " + tPage);
+	String tWhereSql = " ";
+	if (tComCode != null && !"".equals(tComCode)) {
+	    tWhereSql += " and b.comcode = '" + tComCode + "' ";
+	}
+	if (tEnginNo != null && !"".equals(tEnginNo)) {
+	    tWhereSql += " and b.EngineNo like '%" + tEnginNo + "%' ";
+	}
+	if (tStartDate != null && !"".equals(tStartDate)) {
+	    tStartDate = PubFun.getDate(tStartDate, "MM/dd/yyyy");
+	    tWhereSql += " and b.indate >= date('" + tStartDate + "') ";
+	}
+	if (tEndDate != null && !"".equals(tEndDate)) {
+	    tEndDate = PubFun.getDate(tEndDate, "MM/dd/yyyy");
+	    tWhereSql += " and b.indate <= date('" + tEndDate + "') ";
+	}
+	
+	String tSql = " select b.serialno, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
+		+ " from  TRAFFIC b  where " + tWhereSql ;
+	System.out.println(tSql);
+	DataSource tDataSource = new DataSource();
+	Connection tConn = tDataSource.openConn();
+	Statement tStatement = tConn.createStatement();
+	ResultSet tResultSet = tStatement.executeQuery(tSql);
+	int tRowNums = 0;
+	String tContext = ", \"rows\" : [ ";
+	while (tResultSet.next()) {
+	    String tSerialNo = tResultSet.getString("missionid");
+	    String tEngineNo = tResultSet.getString("EngineNo");
+	    String tVIN = tResultSet.getString("VIN");
+	    String tmodel = tResultSet.getString("model");
+	    double tcost = tResultSet.getDouble("cost");
+	    double tmileage = tResultSet.getDouble("mileage");
+	    String tcolor = tResultSet.getString("color");
+	    String tattn = tResultSet.getString("attn");
+	    String tcomname = tResultSet.getString("comname");
+	    String tindate = tResultSet.getString("indate");
+	    String tremark = tResultSet.getString("remark");
+	    String tcreateoperator = tResultSet.getString("createoperator");
+	    tContext += "{ \"SerialNo\":\"" + tSerialNo + "\",";
+	    tContext += "\"EngineNo\":\"" + tEngineNo + "\",";
+	    tContext += "\"VIN\":\"" + tVIN + "\",";
+	    tContext += "\"model\":\"" + tmodel + "\",";
+	    tContext += "\"cost\":\"" + tcost + "\",";
+	    tContext += "\"mileage\":\"" + tmileage + "\",";
+	    tContext += "\"color\":\"" + tcolor + "\",";
+	    tContext += "\"attn\":\"" + tattn + "\",";
+	    tContext += "\"comname\":\"" + tcomname + "\",";
+	    tContext += "\"remark\":\"" + tremark + "\",";
+	    tContext += "\"indate\":\"" + tindate + "\",";
+	    tContext += "\"operator\":\"" + tcreateoperator + "\"},";
+	    tRowNums++;
+	}
+	tContext = tContext.substring(0, tContext.length() - 1) + "]}";
+	tDataSource.closeConn(tConn, tStatement, tResultSet);
+	String tData = "{\"total\":" + tRowNums + tContext;
+	return tData;
+    }
+    
 }

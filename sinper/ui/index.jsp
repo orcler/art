@@ -43,7 +43,6 @@ System.out.println("index - " + tPwd);
 				</div>
 				<div title="库存管理" data-options="selected:false" style="padding:10px;">
 					<a href="javascript:inQuery()"><font size='3'>入库查询</font></a></br>
-					<a href="javascript:outQuery()"><font size='3'>出库查询</font></a></br>
 					<a href="javascript:existsQuery()"><font size='3'>库存查询</font></a></br>
 					<a href="javascript:existsQuery()"><font size='3'>库存盘点</font></a></br>
 				</div>
