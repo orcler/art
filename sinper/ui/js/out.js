@@ -135,9 +135,9 @@ function outConfGrid() {
 
 function outcf_search() {
 	var tcomcode =$('#outcf_comcode').combobox('getValue');
-	var tincf_engineno= $('#incf_engineno').val();
-	var tincf_startdate =$('#incf_startdate').datebox('getValue');
-	var tincf_enddate = $('#incf_enddate').datebox('getValue');
+	var tincf_engineno= $('#outcf_engineno').val();
+	var tincf_startdate =$('#outcf_startdate').datebox('getValue');
+	var tincf_enddate = $('#outcf_enddate').datebox('getValue');
 	var tUrl = " ./outdataquery.form?qtype=outconf&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
 	$(document).ready(function() {
 	    $('#outconf_dg').datagrid({
@@ -154,7 +154,7 @@ function outcf_print() {
 		$.messager.alert('出库凭证打印','请选择一条数据');
 		return;
 	}
-	 $('#outconf_form').attr('action','print.form?type=outin');
+	 $('#outconf_form').attr('action','print.form?prttype=out');
 	 $('#outconf_form').attr('target','_blank');
 	 $('#outconf_form').submit();
 }
@@ -167,15 +167,15 @@ function outconf_insubmit() {
 	}
 	$(document).ready(function() {
 		var options = {
-			url : 'inconf.form',
+			url : 'outconf.form?conftype=in',
 			success : function(data) {
 				$.messager.alert('入库确认',data);
 				outcf_search();
 			}
 		}
-		$('#inconf_form').ajaxSubmit(options);
+		$('#outconf_form').ajaxSubmit(options);
 	});
-	$('#inconf_form').clearForm();
+	$('#outconf_form').clearForm();
 }
 //out out conf
 function outconf_outsubmit() {
@@ -186,15 +186,15 @@ function outconf_outsubmit() {
 	}
 	$(document).ready(function() {
 		var options = {
-			url : 'inconf.form',
+			url : 'outconf.form?conftype=out',
 			success : function(data) {
 				$.messager.alert('出库确认',data);
 				outcf_search();
 			}
 		}
-		$('#inconf_form').ajaxSubmit(options);
+		$('#outconf_form').ajaxSubmit(options);
 	});
-	$('#inconf_form').clearForm();
+	$('#outconf_form').clearForm();
 }
 
 //入库确认相关结束----------------------------------------------------------------------------

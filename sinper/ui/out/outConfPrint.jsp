@@ -19,7 +19,7 @@
 		</tr>
 	</thead>
 	</table>
-<div id="outconf_ft'" style="padding:2px 5px;">
+<div id="outconf_ft" style="padding:2px 5px;">
 		车源：<select class="easyui-combobox"  id="outcf_comcode"	name="outcf_comcode" style="width:110px;" 
 					data-options="	url:'codequery.form?codetype=comcode',method:'get',valueField:'id',textField:'text',panelHeight:'auto'">
 			</select>

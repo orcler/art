@@ -133,7 +133,7 @@ function incf_print() {
 		$.messager.alert('入库凭证打印','请选择一条数据');
 		return;
 	}
-	 $('#inconf_form').attr('action','print.form?type=in');
+	 $('#inconf_form').attr('action','print.form?prttype=in');
 	 $('#inconf_form').attr('target','_blank');
 	 $('#inconf_form').submit();
 }

@@ -9,6 +9,7 @@ import com.art.dao.HibernateUtil;
 import com.art.dao.IMissionDao;
 import com.art.dao.ITrafficDao;
 import com.art.pdf.InConfPirnt;
+import com.art.pdf.OutConfPirnt;
 import com.art.schema.MissionSchema;
 import com.art.schema.TrafficSchema;
 
@@ -160,7 +161,7 @@ public class TrafficService {
 	return null;
     }
     
-    public String printPdf(MissionSchema aMissionSchema, String tPath) {
+    public String prtInPdf(MissionSchema aMissionSchema, String tPath) {
     	session = HibernateUtil.getSession();
     	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "1000000003");
     	TrafficSchema tTrafficSchema = new TrafficSchema();
@@ -182,6 +183,33 @@ public class TrafficService {
     	return null;
     }
     
+    public String prtOutPdf(MissionSchema aMissionSchema, String tPath) {
+    	session = HibernateUtil.getSession();
+    	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "2000000003");
+    	TrafficSchema tOutTrafficSchema = new TrafficSchema();
+    	aMissionSchema.setMissionprop2(tMissionSchema.getMissionprop2());//借用传输文件名
+    	
+    	tOutTrafficSchema.setSerialNo(tMissionSchema.getMissionprop2());
+    	session.clear();
+    	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
+    	TrafficSchema tInTrafficSchema = new TrafficSchema();
+    	if (!"1".equals(tOutTrafficSchema.getPaymode())) {//车俩入库
+    	    tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+    	    tInTrafficSchema = trafficDao.query(session, tInTrafficSchema);
+    	}
+    	try {
+			boolean tIsCreated = new OutConfPirnt().printOutPdf(tOutTrafficSchema, tInTrafficSchema,tPath);
+			if (tIsCreated) {
+			    tOutTrafficSchema.setInfo1("1");//打印凭证打印标识
+			    session.saveOrUpdate(tOutTrafficSchema);
+			    session.flush();
+			    session.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     
     public String outRecord(boolean isPay, TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
   	session = HibernateUtil.getSession();
@@ -260,6 +288,82 @@ public class TrafficService {
 	    tTransaction.rollback();
 	    e.printStackTrace();
 	    return "入库失败，发动机号：" + aTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
+    public String outInConf(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "2000000003");
+	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop2());
+	TrafficSchema tOutTrafficSchema = trafficDao.query(session, aTrafficSchema);//出库信息
+	if (null == tOutTrafficSchema.getInfo1() || "".equals(tOutTrafficSchema.getInfo1())) {
+	    return "还未打印凭证，不能确认！";
+	}
+	
+	TrafficSchema tInTrafficSchema = new TrafficSchema();//入库信息
+	tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	tInTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	session.clear();
+	if ("0".equals(tOutTrafficSchema.getUwflag())){//已操作出库确认
+	    tMissionSchema.setActivityid("2000000004");
+		tMissionSchema.setModifydate(aMissionSchema.getModifydate());
+		tMissionSchema.setModifytime(aMissionSchema.getModifytime());
+		tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
+		missionDao.update(session, tMissionSchema);
+	}
+
+	tInTrafficSchema.setUwflag("0");
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    trafficDao.update(session, tInTrafficSchema);
+	    tTransaction.commit();
+	    session.flush();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库确认失败，发动机号：" + tInTrafficSchema.getEngineNo();
+	} finally {
+	    session.close();
+	}
+	return null;
+    }
+    
+    public String outOutConf(TrafficSchema aTrafficSchema, MissionSchema aMissionSchema) {
+	session = HibernateUtil.getSession();
+	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "2000000003");
+	aTrafficSchema.setSerialNo(tMissionSchema.getMissionprop2());
+	TrafficSchema tOutTrafficSchema = trafficDao.query(session, aTrafficSchema);//出库信息
+	if (null == tOutTrafficSchema.getInfo1() || "".equals(tOutTrafficSchema.getInfo1())) {
+	    return "还未打印凭证，不能确认！";
+	}
+	
+	TrafficSchema tInTrafficSchema = new TrafficSchema();//入库信息
+	if (!"1".equals(tOutTrafficSchema.getPaymode())) {//
+	    tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
+	    tInTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	}
+	session.clear();
+	if ("0".equals(tInTrafficSchema.getUwflag()) ||"1".equals(tOutTrafficSchema.getPaymode())){//已操作出库确认
+	    tMissionSchema.setActivityid("2000000004");
+		tMissionSchema.setModifydate(aMissionSchema.getModifydate());
+		tMissionSchema.setModifytime(aMissionSchema.getModifytime());
+		tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
+		missionDao.update(session, tMissionSchema);
+	}
+
+	tOutTrafficSchema.setUwflag("0");
+	Transaction tTransaction = session.beginTransaction();
+	try {
+	    trafficDao.update(session, tOutTrafficSchema);
+	    tTransaction.commit();
+	    session.flush();
+	} catch (Exception e) {
+	    tTransaction.rollback();
+	    e.printStackTrace();
+	    return "入库确认失败，发动机号：" + tInTrafficSchema.getEngineNo();
 	} finally {
 	    session.close();
 	}
