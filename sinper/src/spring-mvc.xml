@@ -34,6 +34,10 @@
 	<bean id="CtrlOutManager" class="com.art.ctrl.CtrlOutManager"  autowire="byType"  /> 
 	<bean id="CtrlOutUw" class="com.art.ctrl.CtrlOutUw"  autowire="byType"  /> 
 	<bean id="CtrlOutConf" class="com.art.ctrl.CtrlOutConfDeal"  autowire="byType"  /> 
+	<bean id="CtrlInvertQuery" class="com.art.ctrl.CtrlInvertQuery"  autowire="byType"  /> 
+	<bean id="CtrlInvertApp" class="com.art.ctrl.CtrlInvertApp"  autowire="byType"  /> 
+	<bean id="CtrlInvertUpload" class="com.art.ctrl.CtrlInvertUpload"  autowire="byType"  /> 
+	<bean id="CtrlInvertConf" class="com.art.ctrl.CtrlInvertConf"  autowire="byType"  /> 
 		
 	<bean id="handerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
 		<property name="mappings"  ref="urlMappings" />
@@ -52,6 +56,10 @@
 		<prop key="outdataquery.form">CtrlOutDataQuery</prop>
 		<prop key="outuw.form">CtrlOutUw</prop>
 		<prop key="outconf.form">CtrlOutConf</prop>
+		<prop key="invertdata.form">CtrlInvertQuery</prop>
+		<prop key="invertapp.form">CtrlInvertApp</prop>
+		<prop key="invertupload.form">CtrlInvertUpload</prop>
+		<prop key="invertconf.form">CtrlInvertConf</prop>
 	</util:properties>
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
 		<property name="prefix"  value="/" />

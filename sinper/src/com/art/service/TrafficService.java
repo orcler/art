@@ -2,6 +2,7 @@ package com.art.service;
 
 import java.util.List;
 
+import org.apache.catalina.websocket.MessageInbound;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -368,6 +369,60 @@ public class TrafficService {
 	    session.close();
 	}
 	return null;
+    }
+    
+    public String invertApp(MissionSchema aMissionSchema) {
+    	session = HibernateUtil.getSession();
+    	Transaction tTransaction = session.beginTransaction();
+    	try {
+    	    missionDao.save(session, aMissionSchema);
+    	    tTransaction.commit();
+    	} catch (Exception e) {
+    	    tTransaction.rollback();
+    	    e.printStackTrace();
+    	    return "入库失败，流水号：" + aMissionSchema.getMissionprop1();
+    	} finally {
+    	    session.close();
+    	}
+    	return null;
+    }
+    
+    public String invertupload(MissionSchema aMissionSchema) {
+    	session = HibernateUtil.getSession();
+    	Transaction tTransaction = session.beginTransaction();
+    	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "3000000002");
+    	tMissionSchema.setActivityid("3000000003");
+    	tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
+    	try {
+    	    missionDao.update(session, tMissionSchema);
+    	    tTransaction.commit();
+    	} catch (Exception e) {
+    	    tTransaction.rollback();
+    	    e.printStackTrace();
+    	    return "入库失败，流水号：" + tMissionSchema.getMissionprop1();
+    	} finally {
+    	    session.close();
+    	}
+    	return null;
+    }
+    
+    public String invertConf(MissionSchema aMissionSchema) {
+    	session = HibernateUtil.getSession();
+    	Transaction tTransaction = session.beginTransaction();
+    	MissionSchema tMissionSchema = missionDao.getByMissionId(session, aMissionSchema.getMissionid(), "3000000003");
+    	tMissionSchema.setActivityid("3000000004");
+    	tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
+    	try {
+    	    missionDao.update(session, tMissionSchema);
+    	    tTransaction.commit();
+    	} catch (Exception e) {
+    	    tTransaction.rollback();
+    	    e.printStackTrace();
+    	    return "入库失败，流水号：" + tMissionSchema.getMissionprop1();
+    	} finally {
+    	    session.close();
+    	}
+    	return null;
     }
     
     public ITrafficDao getTrafficDao() {

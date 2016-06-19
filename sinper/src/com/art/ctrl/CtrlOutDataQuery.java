@@ -122,8 +122,8 @@ public class CtrlOutDataQuery implements Controller {
 	}
 	tResultSet.close();
 	
-	tSql = " select a.missionid,b.SerialNo as outserialno, b.EngineNo b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
-		+ "b.phone, b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000004' and a.missionprop1=b.SerialNo  and b.state='1' " + tWhereSql + tLimit;
+	tSql = " select a.missionid,b.SerialNo as outserialno, b.EngineNo, b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
+		+ " b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000004' and a.missionprop1=b.SerialNo  and b.state='1' " + tWhereSql + tLimit;
 	System.out.println(tSql);
 	tResultSet = tStatement.executeQuery(tSql);
 	String tContext = ", \"rows\" : [ ";

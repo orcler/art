@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <form id="inquery_form" method="post">
-	<table class="easyui-datagrid" title="入库清单" id="inquery_dg" data-options="rownumbers:true,url:'./dataquery.form?qtype=inquery',method:'get',singleSelect:true,toolbar:'#inquery_ft'">
+	<table class="easyui-datagrid" title="入库清单" id="inquery_dg" data-options="url:'./dataquery.form?qtype=inquery',method:'get',singleSelect:true,pagination:true,rownumbers:true,pageSize:10,toolbar:'#inquery_ft'">
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
@@ -14,17 +14,16 @@
 			<th data-options="field:'attn'" width="80">联系人</th>
 			<th data-options="field:'comname'" width="100">车源</th>
 			<th data-options="field:'indate'" width="80">入库日期</th>
-			<th data-options="field:'operator'" width="80">操作员</th>
 		</tr>
 	</thead>
 	</table>
 <div id="inquery_ft" style="padding:2px 5px;">
-		车源：<select class="easyui-combobox"  id="incf_comcode"	name="incf_comcode" style="width:110px;" 
+		车源：<select class="easyui-combobox"  id="inquery_comcode"	name="inquery_comcode" style="width:110px;" 
 					data-options="	url:'codequery.form?codetype=comcode',method:'get',valueField:'id',textField:'text',panelHeight:'auto'">
 			</select>
-		发动机编码：<input class="easyui-textbox"  id="incf_engineno" name="inquery_engineno" style="width:110px">
-		起始日期: <input class="easyui-datebox"  id="incf_startdate" name="inquery_startdate"  style="width:110px">
-		终止日期: <input class="easyui-datebox"  id="incf_enddate" name="inquery_enddate"  style="width:110px">
+		发动机编码：<input class="easyui-textbox"  id="inquery_engineno" name="inquery_engineno" style="width:110px">
+		起始日期: <input class="easyui-datebox"  id="inquery_startdate" name="inquery_startdate"  style="width:110px">
+		终止日期: <input class="easyui-datebox"  id="inquery_enddate" name="inquery_enddate"  style="width:110px">
 		<a href="javascript:inquery_search()" class="easyui-linkbutton"  id="inquery_search" name="inquery_search"  iconCls="icon-search">搜索</a>
 </div>
 <input type="hidden" id="inquery_serialno" name="inquery_serialno" >
