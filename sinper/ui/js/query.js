@@ -20,7 +20,16 @@ function outQuery()
 		$('#DivTab').tabs('add',{title: '出库查询', href: './query/outQuery.jsp', closable: true});
 	}
 }
-
+//库存查询
+function existsQuery()
+{
+	var isExists = $('#DivTab').tabs('exists','库存查询');
+	if (isExists){
+		$('#DivTab').tabs('select','库存查询');
+	} else{
+		$('#DivTab').tabs('add',{title: '库存查询', href: './query/existsQuery.jsp', closable: true});
+	}
+}
 //库存盘点申请
 function invertApply()
 {
@@ -81,6 +90,21 @@ function outquery_search() {
 	})
 }
 //出库查询结束----------------------------------------------------------------------------
+//库存查询开始--------------------------------------------------------------------------------
+function extquery_search() {
+	var tcomcode =$('#extquery_comcode').combobox('getValue');
+	var tincf_engineno= $('#extquery_engineno').val();
+	var tincf_startdate =$('#extquery_startdate').datebox('getValue');
+	var tincf_enddate = $('#extquery_enddate').datebox('getValue');
+	var tUrl = "./dataquery.form?qtype=extquery&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
+	$(document).ready(function() {
+	    $('#extquery_dg').datagrid({
+	    	method: 'get', 
+	    	url:tUrl
+	    });   
+	})
+}
+//库存查询结束----------------------------------------------------------------------------
 //库存盘点申请开始------------------------------------------------------------------------
 function ivtapp_search() {
 	var tcomcode =$('#ivtapp_comcode').combobox('getValue');

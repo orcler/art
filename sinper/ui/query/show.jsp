@@ -29,7 +29,7 @@
 	for (String src : tList) {
 		System.out.println("-------------------------------------" + src);
 %>
-<td><img alt=""  src="<%=src %>"  style="width:50%,height:100%"/></td>
+<td><img alt=""  src="<%=src %>"  style="width:200px,height:200px"/></td>
 
 <%
 	}

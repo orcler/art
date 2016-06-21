@@ -27,7 +27,7 @@
 		<a href="javascript:ivtconf_search()" class="easyui-linkbutton"  id="ivtconf_search" name="ivtconf_search"  iconCls="icon-search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</a>
 		<span style="margin-left:10px"/></span><a href="javascript:ivtconf_submit()"  class="easyui-linkbutton" >提&nbsp;&nbsp;&nbsp;&nbsp;交</a>
 </div>
-<div id="showimg" title="图片查看"  style="width:100%,height:100%"></div>
+<div id="showimg" title="图片查看"  style="width:600px,height:500px"></div>
 <input type="hidden" id="ivtconf_serialno" name="ivtconf_serialno" >
 </form>
 <script>

@@ -41,12 +41,18 @@ public class CtrlInvertUpload implements Controller {
 				String fileName = item.getName();
 				String tSubfix = fileName.substring(fileName.lastIndexOf("."));
 				int tPages = getPages(tSerialNo);
-				String tFileName = "data/images/" + tSerialNo.substring(4) +"_" + getPages(tSerialNo) + tSubfix;
-				String tPath = request.getSession().getServletContext()	.getRealPath("/") + tFileName; 
+				String tFileName =tSerialNo.substring(4) +"_" + getPages(tSerialNo) + tSubfix;
+				String tFiles = request.getSession().getServletContext()	.getRealPath("/") + "data/images";
+				String tPath = tFiles + "/" + tFileName; 
+				File tFile = new File(tFiles);//初始不存在的文件夹
+				if (!tFile.exists()) {
+				    tFile.mkdirs();
+				}
 				File outFile = new File(tPath);
 				System.out.println(tPath);
 				item.write(outFile);
-				boolean isSucc = save(tSerialNo, tPages, tFileName);
+				String tRelativeUrl = "data/images/" + tFileName;
+				boolean isSucc = save(tSerialNo, tPages, tRelativeUrl);
 				String msg = null;
 				if (isSucc) {
 				    msg = "保存成功！";

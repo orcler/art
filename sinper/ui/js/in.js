@@ -116,8 +116,8 @@ function inConfGrid() {
 function incf_search() {
 	var tcomcode =$('#incf_comcode').combobox('getValue');
 	var tincf_engineno= $('#incf_engineno').val();
-	var tincf_startdate =$('#outcf_engineno').datebox('getValue');
-	var tincf_enddate = $('#outcf_startdate').datebox('getValue');
+	var tincf_startdate =$('#incf_startdate').datebox('getValue');
+	var tincf_enddate = $('#incf_enddate').datebox('getValue');
 	var tUrl = " ./dataquery.form?qtype=inconf&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
 	$(document).ready(function() {
 	    $('#inconf_dg').datagrid({
