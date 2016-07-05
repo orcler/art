@@ -37,7 +37,7 @@ function outrg_search() {
 	var tincf_engineno= $('#outrg_engineno').val();
 	var tincf_startdate =$('#outrg_startdate').datebox('getValue');
 	var tincf_enddate = $('#outrg_enddate').datebox('getValue');
-	var tUrl = " ./outdataquery.form?qtype=out_df&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
+	var tUrl = " ./outdataquery.form?qtype=out_rs&comcode=" + tcomcode + "&enginno=" + tincf_engineno + "&startdate=" + tincf_startdate + "&enddate=" + tincf_enddate;
 	$(document).ready(function() {
 	    $('#outrg_dg').datagrid({
 	    	method: 'get', 

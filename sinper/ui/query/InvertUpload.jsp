@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <form id="ivtupload_submit_form" method="post">
-	<table class="easyui-datagrid" title="盘点确认" id="ivtupload_dg" data-options="url:'./invertdata.form?qtype=upload',method:'get',singleSelect:true,pagination:true,rownumbers:true,pageSize:10,toolbar:'#ivtupload_ft'">
+	<table class="easyui-datagrid" title="盘点上传" id="ivtupload_dg" data-options="url:'./invertdata.form?qtype=upload',method:'get',singleSelect:true,pagination:true,rownumbers:true,pageSize:10,toolbar:'#ivtupload_ft'">
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>

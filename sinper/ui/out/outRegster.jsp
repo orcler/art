@@ -4,21 +4,27 @@
 	<thead>
 		<tr>
 			<th data-options="field:'ck',checkbox:true"></th>
-			<th data-options="field:'SerialNo'" width="150">流水号</th>
-			<th data-options="field:'EngineNo'" width="80">发动机编码</th>
-			<th data-options="field:'VIN'" width="80">机架编码</th>
-			<th data-options="field:'model'" width="80">车型</th>
-			<th data-options="field:'cert'" width="80">合格证号</th>
-			<th data-options="field:'cost',align:'right' " width="80">价值</th>
-			<th data-options="field:'mileage',align:'right'" width="80">行驶里程（km）</th>
-			<th data-options="field:'color'" width="80">颜色</th>
-			<th data-options="field:'attn'" width="80">联系人</th>
-			<th data-options="field:'comcode',hidden:true" width="80">车源编码</th>
+			<th data-options="field:'SerialNo',hidden:true" width="150">流水号</th>
+			<th data-options="field:'activityId',hidden:true" width="80">工作流节点</th>
+			<th data-options="field:'oSerialNo'" width="150">出库流水号</th>
+			<th data-options="field:'oEngineNo'" width="80">发动机编码</th>
+			<th data-options="field:'oVIN'" width="80">机架编码</th>
+			<th data-options="field:'oModel'" width="80">车型</th>
+			<th data-options="field:'oCost',align:'right' " width="80">价值</th>
+			<th data-options="field:'oMileage',align:'right'" width="80">行驶里程（km）</th>
+			<th data-options="field:'oColor'" width="80">颜色</th>
+			<th data-options="field:'oAttn'" width="80">联系人</th>
 			<th data-options="field:'comname'" width="80">车源</th>
-			<th data-options="field:'indate'" width="80">入库日期</th>
+			<th data-options="field:'opdate'" width="80">操作日期</th>
 			<th data-options="field:'operator'" width="80">操作员</th>
+			<th data-options="field:'pay',hidden:true" width="80">付款金额</th>
+			<th data-options="field:'iEngineNo',hidden:true" width="80">发动机编码</th>
+			<th data-options="field:'iVIN',hidden:true" width="80">机架编码</th>
+			<th data-options="field:'iModel',hidden:true" width="80">车型</th>
+			<th data-options="field:'iCost',hidden:true" width="80">价值</th>
+			<th data-options="field:'iMileage',hidden:true" width="80">行驶里程（km）</th>
 			<th data-options="field:'remark',hidden:true" width="80">备注</th>
-			<th data-options="field:'outSerialNo',hidden:true" width="80">出库流水号</th>
+			<th data-options="field:'iColor',hidden:true" width="80">颜色</th>
 		</tr>
 	</thead>
 	</table>
@@ -80,8 +86,9 @@
 		<span style="margin-left:180px"></span><a href="javascript:out_regster_submit()" class="easyui-linkbutton" >保存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
 	</div>
-	<input  type="text"  id="ir_wfserialno" name="ir_wfserialno"  hidden="hidden">
+	<input  type="text"  id="or_wfserialno" name="or_wfserialno"  hidden="hidden">
 	<input  type="text"  id="out_tfserialno" name="out_tfserialno"  hidden="hidden">
+	<input  type="text"  id="or_activityId" name="or_activityId"  hidden="hidden">
 </form>
 <script>
 $(document).ready(function() {
@@ -90,23 +97,21 @@ $(document).ready(function() {
 			var row = $('#outrg_dg').datagrid('getSelected');
 			if (row){
 				$('#orMoney').textbox('setValue',row.cost);//付款
-				$('#ir_wfserialno').val(row.SerialNo);
-				$('#out_tfserialno').val(row.outSerialNo);
+				$('#or_wfserialno').val(row.SerialNo);
+				$('#out_tfserialno').val(row.oSerialNo);
+				$('#or_activityId').val(row.activityId);
 				$('#orComcode').combobox("setValue", row.comcode);
 				$('#orComcode').combobox("setText", row.comname);
-				
-/* 				$('#EngineNo').textbox("setValue", row.EngineNo);
-				$('#VIN').textbox("setValue", row.VIN);
-				$('#model').textbox("setValue", row.model);
-				$('#cert').textbox("setValue", row.cert);
-				$('#cost').textbox("setValue", row.cost);
-				$('#mileage').textbox("setValue", row.mileage);
-				$('#color').textbox("setValue", row.color);
-				$('#attn').textbox("setValue", row.attn);
-				$('#phone').textbox("setValue", row.phone);
-				$('#remark').textbox("setValue", row.remark);
-				$('#comcode').combobox("setValue", row.comcode);
-				$('#comcode').val(row.comcode); */
+ 				$('#orEngineNo').textbox("setValue", row.iEngineNo);
+				$('#orVIN').textbox("setValue", row.iVIN);
+				$('#orModel').textbox("setValue", row.iModel);
+				//$('#orCert').textbox("setValue", row.cert);
+				$('#orCost').textbox("setValue", row.iCost);
+				$('#orMileage').textbox("setValue", row.iMileage);
+				$('#orColor').textbox("setValue", row.iColor);
+				/*$('#orAttn').textbox("setValue", row.attn);
+				$('#orPhone').textbox("setValue", row.phone); */
+				$('#orRemark').textbox("setValue", row.remark);
 			}
 		}
 	})

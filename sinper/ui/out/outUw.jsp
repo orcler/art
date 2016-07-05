@@ -71,7 +71,7 @@
 		<span style="margin-left:20px"></span>
 		审核结论<select class="easyui-combobox"  id="ou_uwstate"  name="ou_uwstate" style="width:200px;">
 			<option value="1">通过</option>
-			<!-- <option value="2">退回</option> -->
+			<option value="2">退回</option>
 			<option value="3">拒绝</option>
 		</select>
 		<br>

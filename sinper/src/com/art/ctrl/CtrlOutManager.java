@@ -26,16 +26,22 @@ public class CtrlOutManager implements Controller {
 	Date tCurDate = PubFun.getCurSqlDate();
 	String tCurTime = PubFun.getCurTime();
 	String tOldSerialNo = request.getParameter("out_tfserialno");
+	String tWF_SerialNo = request.getParameter("or_wfserialno");
 	String tIsPayMoney = request.getParameter("or_paymode");
+	String tActivityId = request.getParameter("or_activityId");
+	String tType = null;
+	if ("2000000001".equals(tActivityId)) {
+	    tType = "UPDATE";
+	} else {
+	    tType = "INSERT";
+	    tWF_SerialNo = PubFun.getSerialNo("WF");
+	}
 	// 工作流
 	MissionSchema tMissionSchema = new MissionSchema();
 	TrafficSchema tTrafficSchema = new TrafficSchema();
-	String tWF_SerialNo = null;
 	String tTF_SerialNo = null;
 	System.out.println(tOldSerialNo);
-	String tType = "INSERT";
 	boolean isPay =  "on".equals(tIsPayMoney);
-	tWF_SerialNo = PubFun.getSerialNo("WF");
 	if (!isPay) {// 使用还款，不需要入库车
 	    tTF_SerialNo = PubFun.getSerialNo("TF");
 	    String tEngineNo = request.getParameter("orEngineNo");
@@ -81,7 +87,7 @@ public class CtrlOutManager implements Controller {
 	    tTrafficSchema.setRemark(tRemark);
 	    tTrafficSchema.setState("1"); // 入库
 	}
-
+	
 	tMissionSchema.setMissionid(tWF_SerialNo);
 	tMissionSchema.setSubmissionid("1");
 	tMissionSchema.setProcessid("0000000002");
@@ -104,7 +110,7 @@ public class CtrlOutManager implements Controller {
 	    if ("INSERT".equals(tType)) {
 		msg = trafficService.outRecord(isPay, tTrafficSchema, tMissionSchema);
 	    } else {
-		msg = trafficService.modifyRecord(tTrafficSchema, tMissionSchema);
+		msg = trafficService.outModify(isPay, tTrafficSchema, tMissionSchema);
 	    }
 	}
 	if (msg == null) {
