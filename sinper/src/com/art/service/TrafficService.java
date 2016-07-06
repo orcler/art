@@ -218,12 +218,14 @@ public class TrafficService {
 	tOutTrafficSchema.setSerialNo(aMissionSchema.getMissionprop2());
 	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
 	tOutTrafficSchema.setState("2");// 出库
+	 tOutTrafficSchema.setRemark(aTrafficSchema.getRemark());
 	tOutTrafficSchema.setOutdate(aMissionSchema.getOutdate());
 	tOutTrafficSchema.setOuttime(aMissionSchema.getOuttime());
 	if (!isPay) {
 	    if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
 		return "入库车俩价值不能小于出库车俩价值";
 	    }
+	    aTrafficSchema.setPaymode(null);
 	    trafficDao.save(session, aTrafficSchema);
 	} else {
 	    tOutTrafficSchema.setPaymode("1");
@@ -262,14 +264,18 @@ public class TrafficService {
 	    tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
 	    tOutTrafficSchema.setOutdate(aMissionSchema.getOutdate());
 	    tOutTrafficSchema.setOuttime(aMissionSchema.getOuttime());
+	    tOutTrafficSchema.setRemark(aTrafficSchema.getRemark());
+	    
 	    if (!isPay) {
 		if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
 		    return "入库车俩价值不能小于出库车俩价值";
 		}
+		tOutTrafficSchema.setPaymode(null);
 		trafficDao.save(session, aTrafficSchema);
 	    } else {
 		tOutTrafficSchema.setPaymode("1");
 	    }
+	   
 	    trafficDao.update(session, tOutTrafficSchema);
 	    missionDao.update(session, aMissionSchema);
 	    tTransaction.commit();

@@ -29,6 +29,7 @@ public class CtrlOutManager implements Controller {
 	String tWF_SerialNo = request.getParameter("or_wfserialno");
 	String tIsPayMoney = request.getParameter("or_paymode");
 	String tActivityId = request.getParameter("or_activityId");
+	String tRemark = request.getParameter("orRemark");
 	String tType = null;
 	if ("2000000001".equals(tActivityId)) {
 	    tType = "UPDATE";
@@ -42,6 +43,7 @@ public class CtrlOutManager implements Controller {
 	String tTF_SerialNo = null;
 	System.out.println(tOldSerialNo);
 	boolean isPay =  "on".equals(tIsPayMoney);
+	System.out.println(tIsPayMoney);
 	if (!isPay) {// 使用还款，不需要入库车
 	    tTF_SerialNo = PubFun.getSerialNo("TF");
 	    String tEngineNo = request.getParameter("orEngineNo");
@@ -54,7 +56,6 @@ public class CtrlOutManager implements Controller {
 	    String tAttn = request.getParameter("orAttn");
 	    String tPhone = request.getParameter("orPhone");
 	    String tComcode = request.getParameter("orComcode");
-	    String tRemark = request.getParameter("orRemark");
 
 	    Date tInDate = tCurDate;
 	    String tIntime = tCurTime;
@@ -84,9 +85,9 @@ public class CtrlOutManager implements Controller {
 	    tTrafficSchema.setComcode(tComcode);
 	    tTrafficSchema.setIndate(tInDate);
 	    tTrafficSchema.setIntime(tIntime);
-	    tTrafficSchema.setRemark(tRemark);
 	    tTrafficSchema.setState("1"); // 入库
 	}
+	tTrafficSchema.setRemark(tRemark);
 	
 	tMissionSchema.setMissionid(tWF_SerialNo);
 	tMissionSchema.setSubmissionid("1");

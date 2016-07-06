@@ -23,6 +23,9 @@
 			<th data-options="field:'iModel',hidden:true" width="80">车型</th>
 			<th data-options="field:'iCost',hidden:true" width="80">价值</th>
 			<th data-options="field:'iMileage',hidden:true" width="80">行驶里程（km）</th>
+			<th data-options="field:'iAttn',hidden:true" width="80">联系人</th>
+			<th data-options="field:'iCert',hidden:true" width="80">合格证</th>
+			<th data-options="field:'iPhone',hidden:true" width="80">联系电话</th>
 			<th data-options="field:'remark',hidden:true" width="80">备注</th>
 			<th data-options="field:'iColor',hidden:true" width="80">颜色</th>
 		</tr>
@@ -95,23 +98,38 @@ $(document).ready(function() {
 	$('#outrg_dg').datagrid({
 		onClickRow: function () {
 			var row = $('#outrg_dg').datagrid('getSelected');
+				$('#outrg_fm').clearForm();
 			if (row){
 				$('#orMoney').textbox('setValue',row.cost);//付款
 				$('#or_wfserialno').val(row.SerialNo);
 				$('#out_tfserialno').val(row.oSerialNo);
 				$('#or_activityId').val(row.activityId);
+				$('#orMoney').textbox("setValue", row.oCost);
 				$('#orComcode').combobox("setValue", row.comcode);
 				$('#orComcode').combobox("setText", row.comname);
- 				$('#orEngineNo').textbox("setValue", row.iEngineNo);
-				$('#orVIN').textbox("setValue", row.iVIN);
-				$('#orModel').textbox("setValue", row.iModel);
-				//$('#orCert').textbox("setValue", row.cert);
-				$('#orCost').textbox("setValue", row.iCost);
-				$('#orMileage').textbox("setValue", row.iMileage);
-				$('#orColor').textbox("setValue", row.iColor);
-				/*$('#orAttn').textbox("setValue", row.attn);
-				$('#orPhone').textbox("setValue", row.phone); */
-				$('#orRemark').textbox("setValue", row.remark);
+				if (row.pay == 'null' && row.activityId == '2000000001') {
+	 				$('#orEngineNo').textbox("setValue", row.iEngineNo);
+					$('#orVIN').textbox("setValue", row.iVIN);
+					$('#orModel').textbox("setValue", row.iModel);
+					$('#orCert').textbox("setValue", row.iCert);
+					$('#orCost').textbox("setValue", row.iCost);
+					$('#orMileage').textbox("setValue", row.iMileage);
+					$('#orColor').textbox("setValue", row.iColor);
+					$('#orAttn').textbox("setValue", row.iAttn);
+					$('#orPhone').textbox("setValue", row.iPhone);
+					$('#orRemark').textbox("setValue", row.remark);
+					var tPayMode = document.getElementById('or_paymode');
+					tPayMode.checked = false;
+					payMode(tPayMode);
+				} else if (row.pay == '1' && row.activityId == '2000000001') {
+					var tPayMode = document.getElementById('or_paymode');
+					tPayMode.checked = true;
+					payMode(tPayMode);
+				} else {
+					var tPayMode = document.getElementById('or_paymode');
+					tPayMode.checked = false;
+					payMode(tPayMode);
+				}
 			}
 		}
 	})

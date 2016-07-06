@@ -7,8 +7,8 @@ import java.sql.Statement;
 
 public class DataSource {
 	
-	private String url = "jdbc:mysql://10.1.3.243:3306/sinper?useUnicode=true&amp;characterEncoding=UTF-8";
-	//private String url = "jdbc:mysql://localhost:3306/sinper?useUnicode=true&amp;characterEncoding=UTF-8";
+	//private String url = "jdbc:mysql://10.1.3.243:3306/sinper?useUnicode=true&amp;characterEncoding=UTF-8";
+	private String url = "jdbc:mysql://localhost:3306/sinper?useUnicode=true&amp;characterEncoding=UTF-8";
 	private String user="root";
 	private String pwd = "123456";
 	

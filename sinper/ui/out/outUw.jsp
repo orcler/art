@@ -100,6 +100,7 @@ $(document).ready(function() {
 					$('#ouiModel').textbox("setValue", '');
 					$('#ouiCost').textbox("setValue", '');
 					$('#ouiMileage').textbox("setValue", '');
+					$('#ou_remark').textbox("setValue", '');
 				}else {
 					$('#ou_pay').textbox("setValue", '');
 					$('#ouiEngineNo').textbox("setValue", row.iEngineNo);
@@ -107,8 +108,8 @@ $(document).ready(function() {
 					$('#ouiModel').textbox("setValue", row.iModel);
 					$('#ouiCost').textbox("setValue", row.iCost);
 					$('#ouiMileage').textbox("setValue", row.iMileage);
+					$('#ou_remark').textbox("setValue", row.remark);
 				}
-				$('#ou_remark').textbox("setValue", row.remark);
 			}
 		}
 	})
