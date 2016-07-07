@@ -86,9 +86,7 @@ public class TrafficService {
 	    tActivityId = "1000000001";
 	    int tIdx = Integer.valueOf(tSubMissionid) + 1;
 	    tSubMissionid = String.valueOf(tIdx);
-
-	} else {
-	    tActivityId = "1000000000";
+	} else if("3".equals(tUwFlag)) {//审核拒绝
 	}
 	tMissionSchema.setActivityid(tActivityId);
 	tMissionSchema.setSubmissionid(tSubMissionid);
@@ -97,8 +95,13 @@ public class TrafficService {
 	session.clear();
 	Transaction tTransaction = session.beginTransaction();
 	try {
-	    trafficDao.update(session, tTrafficSchema);
-	    missionDao.update(session, tMissionSchema);
+	    if ("3".equals(tUwFlag)) {
+		trafficDao.del(session, tTrafficSchema);
+		missionDao.del(session, tMissionSchema);
+	    } else {
+		trafficDao.update(session, tTrafficSchema);
+		missionDao.update(session, tMissionSchema);
+	    }
 	    tTransaction.commit();
 	    session.flush();
 	} catch (Exception e) {
@@ -127,7 +130,7 @@ public class TrafficService {
 	Transaction tTransaction = session.beginTransaction();
 	try {
 	    trafficDao.update(session, tTrafficSchema);
-	    missionDao.update(session, tMissionSchema);
+	    missionDao.del(session, tMissionSchema);
 	    tTransaction.commit();
 	    session.flush();
 	} catch (Exception e) {
@@ -218,9 +221,10 @@ public class TrafficService {
 	tOutTrafficSchema.setSerialNo(aMissionSchema.getMissionprop2());
 	tOutTrafficSchema = trafficDao.query(session, tOutTrafficSchema);
 	tOutTrafficSchema.setState("2");// 出库
-	 tOutTrafficSchema.setRemark(aTrafficSchema.getRemark());
+	tOutTrafficSchema.setRemark(aTrafficSchema.getRemark());
 	tOutTrafficSchema.setOutdate(aMissionSchema.getOutdate());
 	tOutTrafficSchema.setOuttime(aMissionSchema.getOuttime());
+	tOutTrafficSchema.setUwflag(null);
 	if (!isPay) {
 	    if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
 		return "入库车俩价值不能小于出库车俩价值";
@@ -256,7 +260,7 @@ public class TrafficService {
 	    if (!"on".equals(tOldPay)) {
 		tOldTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
 		tOldTrafficSchema = trafficDao.query(session, tOldTrafficSchema);
-		 trafficDao.del(session, tOldTrafficSchema);
+		trafficDao.del(session, tOldTrafficSchema);
 	    }
 	    session.clear();
 	    TrafficSchema tOutTrafficSchema = new TrafficSchema();
@@ -265,7 +269,8 @@ public class TrafficService {
 	    tOutTrafficSchema.setOutdate(aMissionSchema.getOutdate());
 	    tOutTrafficSchema.setOuttime(aMissionSchema.getOuttime());
 	    tOutTrafficSchema.setRemark(aTrafficSchema.getRemark());
-	    
+	    tOutTrafficSchema.setUwflag(null);
+
 	    if (!isPay) {
 		if (aTrafficSchema.getCost() < tOutTrafficSchema.getCost()) {
 		    return "入库车俩价值不能小于出库车俩价值";
@@ -275,7 +280,7 @@ public class TrafficService {
 	    } else {
 		tOutTrafficSchema.setPaymode("1");
 	    }
-	   
+
 	    trafficDao.update(session, tOutTrafficSchema);
 	    missionDao.update(session, aMissionSchema);
 	    tTransaction.commit();
@@ -312,8 +317,10 @@ public class TrafficService {
 	    tActivityId = "2000000001";
 	    int tIdx = Integer.valueOf(tSubMissionid) + 1;
 	    tSubMissionid = String.valueOf(tIdx);
-	} else {
-	    tActivityId = "2000000000";
+	} else if("3".equals(tUwFlag)) {//审批拒绝后，出库车辆重新入库
+	    tTrafficSchema.setState("1");
+	    tTrafficSchema.setUwflag("0");
+	    tTrafficSchema.setRemark(null);
 	}
 	tMissionSchema.setActivityid(tActivityId);
 	tMissionSchema.setSubmissionid(tSubMissionid);
@@ -322,11 +329,19 @@ public class TrafficService {
 	session.clear();
 	Transaction tTransaction = session.beginTransaction();
 	try {
-	    if (!"1".equals(tTrafficSchema.getPaymode())) {
-		trafficDao.update(session, tInTrafficSchema);
+	    if ("3".equals(tUwFlag)) {
+		if (!"1".equals(tTrafficSchema.getPaymode())) {
+		    trafficDao.del(session, tInTrafficSchema);
+		}
+		missionDao.del(session, tMissionSchema);
+		trafficDao.update(session, tTrafficSchema);
+	    } else {
+		if (!"1".equals(tTrafficSchema.getPaymode())) {
+		    trafficDao.update(session, tInTrafficSchema);
+		}
+		trafficDao.update(session, tTrafficSchema);
+		missionDao.update(session, tMissionSchema);
 	    }
-	    trafficDao.update(session, tTrafficSchema);
-	    missionDao.update(session, tMissionSchema);
 	    tTransaction.commit();
 	    session.flush();
 	} catch (Exception e) {
@@ -350,14 +365,14 @@ public class TrafficService {
 
 	TrafficSchema tInTrafficSchema = new TrafficSchema();// 入库信息
 	tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
-	tInTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	tInTrafficSchema = trafficDao.query(session, tInTrafficSchema);
 	session.clear();
 	if ("0".equals(tOutTrafficSchema.getUwflag())) {// 已操作出库确认
-	    tMissionSchema.setActivityid("2000000004");
+	    /*tMissionSchema.setActivityid("2000000004");
 	    tMissionSchema.setModifydate(aMissionSchema.getModifydate());
 	    tMissionSchema.setModifytime(aMissionSchema.getModifytime());
-	    tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
-	    missionDao.update(session, tMissionSchema);
+	    tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());*/
+	    missionDao.del(session, tMissionSchema);
 	}
 
 	tInTrafficSchema.setUwflag("0");
@@ -392,11 +407,11 @@ public class TrafficService {
 	}
 	session.clear();
 	if ("0".equals(tInTrafficSchema.getUwflag()) || "1".equals(tOutTrafficSchema.getPaymode())) {// 已操作出库确认
-	    tMissionSchema.setActivityid("2000000004");
+	   /* tMissionSchema.setActivityid("2000000004");
 	    tMissionSchema.setModifydate(aMissionSchema.getModifydate());
 	    tMissionSchema.setModifytime(aMissionSchema.getModifytime());
-	    tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());
-	    missionDao.update(session, tMissionSchema);
+	    tMissionSchema.setLastoperator(aMissionSchema.getLastoperator());*/
+	    missionDao.del(session, tMissionSchema);
 	}
 
 	tOutTrafficSchema.setUwflag("0");

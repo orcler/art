@@ -255,7 +255,7 @@ public class CtrlDataQuery implements Controller {
 	tResultSet.close();
 	
 	 tSql = " select b.serialno, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, b.remark "
-		+ " from  TRAFFIC b  where  b.uwflag='0' " + tWhereSql + tLimit ;
+		+ " from  TRAFFIC b  where ((b.state='1'  and b.uwflag='0') or b.state='2') " + tWhereSql + tLimit ;
 	System.out.println(tSql);
 	tDataSource = new DataSource();
 	tConn = tDataSource.openConn();
@@ -412,7 +412,7 @@ public class CtrlDataQuery implements Controller {
 	tResultSet.close();
 	
 	 tSql = " select b.serialno, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, b.remark "
-		+ " from  TRAFFIC b  where  b.state='1'  and b.uwflag='0' " + tWhereSql + tLimit ;
+		+ " from  TRAFFIC b  where b.state='1' and b.uwflag='0' " + tWhereSql + tLimit ;
 	System.out.println(tSql);
 	tDataSource = new DataSource();
 	tConn = tDataSource.openConn();

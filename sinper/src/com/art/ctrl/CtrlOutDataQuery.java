@@ -28,7 +28,6 @@ public class CtrlOutDataQuery implements Controller {
 			tData = outRegsterDefaultJson(request);
 		} else if ("out_rs".equals(tType)) {
 			tData = outRegsterSearchJson(request);
-		} else if ("outconf".equals(tType)) {
 		} else if ("out_uw".equals(tType)) {
 			tData = outUwjson(request);
 		} else if ("outconf".equals(tType)) {

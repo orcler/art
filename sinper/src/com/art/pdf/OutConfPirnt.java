@@ -30,12 +30,6 @@ public class OutConfPirnt {
 		}
 		dataSource.closeConn(tConn, tStatement, tResult);
 		
-		String tInSerialNo = aOutTrafficSchema.getSerialNo();
-		String tInEngineNo = aOutTrafficSchema.getEngineNo();
-		String tInVIN = aOutTrafficSchema.getVIN();
-		double tInCost = aOutTrafficSchema.getCost();
-		String tInModel = aOutTrafficSchema.getModel();
-		String tInColor = aOutTrafficSchema.getColor();
 		
 		int col1_x = 175;
 		int col2_x = 400;
@@ -89,7 +83,14 @@ public class OutConfPirnt {
 		    	tPayModeSchema.setText("入车");
 			tPayModeSchema.setCoordinate(col1_x, 300);
 			tList.add(tPayModeSchema);
-		    
+		        
+			String tInSerialNo = aInTrafficSchema.getSerialNo();
+			String tInEngineNo = aInTrafficSchema.getEngineNo();
+			String tInVIN = aInTrafficSchema.getVIN();
+			double tInCost = aInTrafficSchema.getCost();
+			String tInModel = aInTrafficSchema.getModel();
+			String tInColor = aInTrafficSchema.getColor();
+			
 			PDFSchema tInSerialNoSchema = new PDFSchema();
 			tInSerialNoSchema.setText(tInSerialNo);
 			tInSerialNoSchema.setCoordinate(col1_x, 284);
