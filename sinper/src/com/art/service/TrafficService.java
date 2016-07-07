@@ -403,7 +403,7 @@ public class TrafficService {
 	TrafficSchema tInTrafficSchema = new TrafficSchema();// 入库信息
 	if (!"1".equals(tOutTrafficSchema.getPaymode())) {//
 	    tInTrafficSchema.setSerialNo(tMissionSchema.getMissionprop1());
-	    tInTrafficSchema = trafficDao.query(session, aTrafficSchema);
+	    tInTrafficSchema = trafficDao.query(session, tInTrafficSchema);
 	}
 	session.clear();
 	if ("0".equals(tInTrafficSchema.getUwflag()) || "1".equals(tOutTrafficSchema.getPaymode())) {// 已操作出库确认
