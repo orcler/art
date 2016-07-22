@@ -1,9 +1,12 @@
+<%@page import="java.util.Enumeration"%>
+<%@page import="com.art.schema.MenuSchema"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" %>
 <%
 String tUserId = request.getParameter("userId");
 String tPwd = request.getParameter("index - pwd");
+List <MenuSchema>tMenus = (List<MenuSchema>)session.getAttribute("amenu");
 System.out.println("index - " + tUserId);
-System.out.println("index - " + tPwd);
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +33,7 @@ System.out.println("index - " + tPwd);
 		</div>
 		<div data-options="region:'west',split:true" title="菜单" style="width:280px;">
 			<div class="easyui-accordion" data-options="fit:true,border:false">
-				<div title="入库管理" data-options="selected:false" style="padding:10px;">
+<!-- 				<div title="入库管理" data-options="selected:false" style="padding:10px;">
  					<a href="javascript:inRgterUI()"><font size='3'>入库登记</font></a></br>
 					<a href="javascript:inUw()"><font size='3'>入库审核</font></a></br>
 					<a href="javascript:confInPrint()"><font size='3'>打印凭证和入库确认</font></a></br>
@@ -52,8 +55,24 @@ System.out.println("index - " + tPwd);
 				<div title="系统管理" style="padding:10px">
 					<a href='javascript:addRole()'><font size='3'>权限管理</font></a></br>
 					<a href='javascript:addUser()'><font size='3'>用户管理</font></a></br>
-				</div>
-			</div>
+				</div> -->
+				<%
+					for (MenuSchema menu : tMenus) {
+					    %>
+					    <div title=<%=menu.getNodeName() %> style="padding:10px">
+					    	<% 
+					    		for (MenuSchema submenu : menu.getChildren()) {
+					    		System.out.println(submenu.getNodeName());
+					    		    %>
+					    		    <a href='javascript:<%=submenu.getRunScript()%>'><font size='3'><%=submenu.getNodeName()%></font></a></br>
+					    		    <%
+					    		}
+					    	%>
+					    	</div>
+					    <%
+					}
+				%>
+		</div>
 		</div>
 		<!-- Context-->
 		<div data-options="region:'center',title:'登录人员：<%=tUserId %>',iconCls:'icon-ok'">

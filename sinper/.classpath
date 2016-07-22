@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ssh"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/xls-pdf"/>
 	<classpathentry kind="output" path="ui/WEB-INF/classes"/>
 </classpath>

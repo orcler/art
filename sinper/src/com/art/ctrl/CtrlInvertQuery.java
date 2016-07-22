@@ -44,7 +44,7 @@ public class CtrlInvertQuery implements Controller {
     	int tIdx = (tPage - 1) * tRows;
     	System.out.println(tRows + " : page : " + tPage);
     	String tLimit = " limit " + tIdx + ", " + tRows;
-	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='3000000002' and a.missionprop1=b.SerialNo and '103' = " + userId;// get total
+	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='3000000002' and a.missionprop1=b.SerialNo ";// get total
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
 	Statement tStatement = tConn.createStatement();
@@ -56,7 +56,7 @@ public class CtrlInvertQuery implements Controller {
 	tResultSet.close();
 	
 	tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-			+ " from MISSION a,TRAFFIC b  where a.activityid='3000000002' and a.missionprop1=b.SerialNo and '103'=" + userId + tLimit;
+			+ " from MISSION a,TRAFFIC b  where a.activityid='3000000002' and a.missionprop1=b.SerialNo " + tLimit;
 	
 	System.out.println(tSql);
 
@@ -102,7 +102,7 @@ public class CtrlInvertQuery implements Controller {
     	int tIdx = (tPage - 1) * tRows;
     	System.out.println(tRows + " : page : " + tPage);
     	String tLimit = " limit " + tIdx + ", " + tRows;
-	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='3000000003' and a.missionprop1=b.SerialNo and '102' = " + userId;// get total
+	String tSql = " select count(1) from MISSION a,TRAFFIC b  where a.activityid='3000000003' and a.missionprop1=b.SerialNo ";// get total
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
 	Statement tStatement = tConn.createStatement();
@@ -114,7 +114,7 @@ public class CtrlInvertQuery implements Controller {
 	tResultSet.close();
 	
 	tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-			+ " from MISSION a,TRAFFIC b  where a.activityid='3000000003' and a.missionprop1=b.SerialNo and '102'=" + userId + tLimit;
+			+ " from MISSION a,TRAFFIC b  where a.activityid='3000000003' and a.missionprop1=b.SerialNo " + tLimit;
 	
 	System.out.println(tSql);
 
@@ -165,7 +165,7 @@ public class CtrlInvertQuery implements Controller {
 	System.out.println(tRows + " : page : " + tPage);
 	String tLimit = " limit " + tIdx + ", " + tRows;
 	System.out.println(tRows + " : page : " + tPage);
-	String tWhereSql = " and '102'= " + userId;
+	String tWhereSql = " ";
 	if (tComCode != null && !"".equals(tComCode)) {
 	    tWhereSql += " and b.comcode = '" + tComCode + "' ";
 	}

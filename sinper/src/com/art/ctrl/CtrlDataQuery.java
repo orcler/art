@@ -43,7 +43,7 @@ public class CtrlDataQuery implements Controller {
 
     public String inRgster_json() throws Exception {
 	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.cert, b.mileage, b.color, b.attn, b.phone, b.comcode , (SELECT x.codename FROM	icode x WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, "
-		+ "b.phone, b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000001' and a.missionprop1=b.SerialNo and a.createoperator='" + userId + "' ";
+		+ "b.phone, b.indate, a.createoperator,b.remark from MISSION a,TRAFFIC b  where a.activityid='1000000001' and a.missionprop1=b.SerialNo ";
 	System.out.println(tSql);
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
@@ -110,7 +110,7 @@ public class CtrlDataQuery implements Controller {
 	tResultSet.close();
 	
 	tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-			+ " from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo and '102'=" + userId + tLimit;
+			+ " from MISSION a,TRAFFIC b  where a.activityid='1000000002' and a.missionprop1=b.SerialNo " + tLimit;
 	
 	System.out.println(tSql);
 
@@ -173,7 +173,7 @@ public class CtrlDataQuery implements Controller {
 	}
 	
 	String tSql = " select a.missionid, b.EngineNo, b.VIN, b.model, b.cost, b.mileage, b.color, b.attn, (SELECT	x.codename FROM	icode x	WHERE	x.codetype = 'comcode' AND x.`code` = b.comcode) as comname, b.indate, a.createoperator, b.remark "
-		+ " from MISSION a,TRAFFIC b  where a.activityid='1000000003' and a.missionprop1=b.SerialNo " + tWhereSql + " and '103'=" + userId ;
+		+ " from MISSION a,TRAFFIC b  where a.activityid='1000000003' and a.missionprop1=b.SerialNo " + tWhereSql ;
 	System.out.println(tSql);
 	DataSource tDataSource = new DataSource();
 	Connection tConn = tDataSource.openConn();
